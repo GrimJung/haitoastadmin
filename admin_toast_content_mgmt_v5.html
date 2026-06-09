@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>예약 페이지 툴팁 관리 - 하나투어 어드민</title>
+  <title>하이 도움말 콘텐츠 관리 - 하나투어 어드민</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
 <style>
 :root {
@@ -171,6 +171,60 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 .info-banner { background: #EEF5FF; border: 1px solid #B5D4F4; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #185FA5; display: flex; align-items: flex-start; gap: 8px; margin-bottom: 16px; }
 .form-footer { display: flex; justify-content: flex-end; gap: 10px; padding-top: 4px; }
 .toast-copied { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #313339; color: #fff; border-radius: 8px; padding: 8px 16px; font-size: 13px; display: none; z-index: 999; }
+
+.platform-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 960px) { .platform-grid { grid-template-columns: 1fr; } }
+.platform-panel { border: 1px solid var(--ht-gray-border); border-radius: 10px; overflow: hidden; background: #fff; }
+.platform-panel.disabled { opacity: 0.55; }
+.platform-panel-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px; background: var(--ht-gray-bg); border-bottom: 1px solid var(--ht-gray-border); }
+.platform-panel-title { font-size: 13px; font-weight: 700; color: var(--ht-text-primary); display: flex; align-items: center; gap: 6px; }
+.platform-badge { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; }
+.platform-badge-mo { background: #EEF5FF; color: #185FA5; }
+.platform-badge-pc { background: #F3EEFF; color: var(--ht-purple); }
+.platform-panel-body { padding: 14px; }
+.platform-panel-body .form-row { grid-template-columns: 110px 1fr; margin-bottom: 14px; }
+.platform-panel-body .form-row:last-child { margin-bottom: 0; }
+.platform-panel-body .form-label { padding-top: 8px; font-size: 12px; }
+
+.mode-radio-group { display: flex; flex-direction: column; gap: 8px; }
+.mode-radio { display: flex; align-items: flex-start; gap: 8px; padding: 10px 12px; border: 1px solid var(--ht-gray-border); border-radius: 8px; cursor: pointer; background: #fff; }
+.mode-radio:hover { border-color: var(--ht-purple-mid); background: #FAFAFC; }
+.mode-radio.selected { border-color: var(--ht-purple); background: var(--ht-purple-light); }
+.mode-radio input { accent-color: var(--ht-purple); margin-top: 2px; flex-shrink: 0; }
+.mode-radio-text { flex: 1; }
+.mode-radio-label { font-size: 13px; font-weight: 600; color: var(--ht-text-primary); }
+.mode-radio-desc { font-size: 11px; color: var(--ht-text-muted); margin-top: 2px; line-height: 1.4; }
+.mode-fixed { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; background: var(--ht-gray-bg); border: 1px solid var(--ht-gray-border); border-radius: 8px; font-size: 12px; color: var(--ht-text-secondary); }
+
+.trigger-fields { background: var(--ht-gray-bg); border-radius: 8px; padding: 12px; margin-top: 4px; }
+.trigger-fields .form-row { margin-bottom: 10px; }
+.trigger-fields .form-row:last-child { margin-bottom: 0; }
+.selector-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.selector-type { width: 88px; flex-shrink: 0; }
+.selector-value { flex: 1; min-width: 140px; font-family: 'Courier New', monospace; font-size: 12px; }
+
+.config-preview { background: #1E1E24; border-radius: 10px; padding: 14px 16px; overflow: auto; max-height: 280px; }
+.config-preview pre { margin: 0; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.55; color: #C8D0E0; white-space: pre-wrap; word-break: break-all; }
+.config-preview .key { color: #7EB8FF; }
+.config-preview .str { color: #A8D8A8; }
+.config-preview .num { color: #F0C674; }
+.config-preview .bool { color: #DE935F; }
+
+.badge-device { font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; margin-right: 4px; }
+.badge-mo { background: #EEF5FF; color: #185FA5; }
+.badge-pc { background: #F3EEFF; color: var(--ht-purple); }
+.badge-trigger { background: var(--ht-gray-bg); color: var(--ht-text-secondary); font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; }
+
+.trigger-summary { background: #fff; border: 1px solid var(--ht-purple-mid); border-radius: 8px; padding: 10px 12px; font-size: 12px; color: var(--ht-text-primary); line-height: 1.5; }
+.trigger-summary.empty { color: var(--ht-text-muted); border-color: var(--ht-gray-border); background: var(--ht-gray-bg); }
+.trigger-summary strong { color: var(--ht-purple); font-weight: 600; }
+.dev-advanced-toggle { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; background: none; border: none; padding: 0; font-size: 11px; color: var(--ht-text-muted); cursor: pointer; font-family: inherit; }
+.dev-advanced-toggle:hover { color: var(--ht-purple); }
+.dev-advanced-toggle .chevron { transition: transform 0.2s; font-size: 13px; }
+.dev-advanced-toggle.open .chevron { transform: rotate(180deg); }
+.dev-advanced-body { margin-top: 10px; padding: 12px; background: #fff; border: 1px dashed var(--ht-gray-border); border-radius: 8px; }
+.dev-advanced-body .form-row { margin-bottom: 10px; }
+.dev-advanced-label { font-size: 10px; font-weight: 600; color: var(--ht-text-muted); letter-spacing: 0.3px; margin-bottom: 8px; }
 </style>
 
 <div class="admin-wrap">
@@ -180,7 +234,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
     <div class="breadcrumb">
       <span>H-AI 관리</span>
       <i class="ti ti-chevron-right" style="font-size:12px" aria-hidden="true"></i>
-      <span class="current" id="bc">예약 페이지 툴팁 관리</span>
+      <span class="current" id="bc">하이 도움말 콘텐츠 관리</span>
     </div>
   </div>
 
@@ -188,7 +242,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
     <div class="sidebar">
       <div class="sidebar-label">H-AI 관리</div>
       <div class="sidebar-item active" onclick="go('list')">
-        <i class="ti ti-list" aria-hidden="true"></i> 툴팁 콘텐츠 관리
+        <i class="ti ti-list" aria-hidden="true"></i> 하이 도움말 콘텐츠
       </div>
       <div class="sidebar-item">
         <i class="ti ti-settings" aria-hidden="true"></i> 노출 설정
@@ -201,8 +255,8 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
       <div class="screen active" id="screen-list">
         <div class="page-header">
           <div>
-            <div class="page-title">예약 페이지 툴팁 콘텐츠 관리</div>
-            <div class="page-sub">예약/결제 각 구간에 노출되는 AgentToast 콘텐츠를 관리합니다.</div>
+            <div class="page-title">하이 도움말 콘텐츠 관리</div>
+            <div class="page-sub">DCR 기반 콘텐츠 ID 발급 · MO/PC 노출·활성화 설정을 어드민에서 관리하고 개발팀에 ID로 연동 요청합니다.</div>
           </div>
           <button class="btn-primary" onclick="go('register')">
             <i class="ti ti-plus" aria-hidden="true"></i> 콘텐츠 등록
@@ -211,7 +265,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 
         <div class="info-banner">
           <i class="ti ti-info-circle" style="font-size:15px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>
-          콘텐츠 ID를 개발팀에 전달하면 구간별 노출 연동에 사용됩니다. ID를 클릭하면 복사됩니다.
+          <span>콘텐츠 ID를 개발팀에 전달하면 구간별 노출 연동에 사용됩니다. MO는 <strong>스크롤/인터렉션</strong>, PC는 <strong>인터렉션</strong> 방식으로 활성화 조건을 어드민에서 등록하면 연동 설정이 반자동 생성됩니다.</span>
         </div>
 
         <div class="filter-bar">
@@ -239,7 +293,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
                 <th style="width:28px"><input type="checkbox" /></th>
                 <th style="width:100px">콘텐츠 ID</th>
                 <th>타이틀</th>
-                <th style="width:130px">노출 위치</th>
+                <th style="width:150px">노출·활성화</th>
                 <th style="width:120px">노출 기간</th>
                 <th style="width:68px">상태</th>
                 <th style="width:96px">최종 수정일</th>
@@ -255,26 +309,32 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
                   <div style="font-weight:500;color:var(--ht-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">날짜와 인원을 미리 채워뒀어요.</div>
                   <div style="font-size:12px;color:var(--ht-text-muted);margin-top:2px">여행자 정보 입력</div>
                 </td>
-                <td><span class="badge badge-loc-blue">패키지 › 예약단계</span></td>
+                <td style="font-size:11px;line-height:1.5">
+                  <div><span class="badge-device badge-mo">MO</span><span class="badge badge-loc-blue">예약단계</span> <span class="badge-trigger">인터렉션</span></div>
+                  <div style="margin-top:4px"><span class="badge-device badge-pc">PC</span><span class="badge badge-loc-blue">예약단계</span> <span class="badge-trigger">인터렉션</span></div>
+                </td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">2026.06.01 ~ 08.31</td>
                 <td><span class="badge badge-on">ON</span></td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">2026.05.20</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">김기획</td>
-                <td><div class="action-btns"><button class="btn-edit" onclick="go('edit')">수정</button><button class="btn-del">삭제</button></div></td>
+                <td><div class="action-btns"><button class="btn-edit" onclick="goEdit('TOAST_001')">수정</button><button class="btn-del">삭제</button></div></td>
               </tr>
               <tr>
                 <td><input type="checkbox" /></td>
                 <td><span class="content-id" onclick="copyId('TOAST_002')" title="클릭하여 복사"><i class="ti ti-copy" style="font-size:11px" aria-hidden="true"></i>TOAST_002</span></td>
                 <td>
-                  <div style="font-weight:500;color:var(--ht-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">계약금과 전액 결제, 뭐가 다를까요?</div>
+                  <div style="font-weight:500;color:var(--ht-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">계약금 결제, 어떤 걸 고르면 되나요?</div>
                   <div style="font-size:12px;color:var(--ht-text-muted);margin-top:2px">계약금/전액 결제 선택</div>
                 </td>
-                <td><span class="badge badge-loc-blue">패키지 › 예약단계</span></td>
+                <td style="font-size:11px;line-height:1.5">
+                  <div><span class="badge-device badge-mo">MO</span><span class="badge badge-loc-blue">예약단계</span> <span class="badge-trigger">최종결제금액 노출</span></div>
+                  <div style="margin-top:4px;color:var(--ht-text-muted)">PC 미사용</div>
+                </td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">상시</td>
                 <td><span class="badge badge-on">ON</span></td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">2026.05.18</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">김기획</td>
-                <td><div class="action-btns"><button class="btn-edit" onclick="go('edit')">수정</button><button class="btn-del">삭제</button></div></td>
+                <td><div class="action-btns"><button class="btn-edit" onclick="goEdit('TOAST_002')">수정</button><button class="btn-del">삭제</button></div></td>
               </tr>
               <tr>
                 <td><input type="checkbox" /></td>
@@ -283,12 +343,15 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
                   <div style="font-weight:500;color:var(--ht-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">하나투어 삼성카드, 혜택만 정리했어요</div>
                   <div style="font-size:12px;color:var(--ht-text-muted);margin-top:2px">카드 결제 섹션</div>
                 </td>
-                <td><span class="badge badge-loc-green">패키지 › 결제단계</span></td>
+                <td style="font-size:11px;line-height:1.5">
+                  <div><span class="badge-device badge-mo">MO</span><span class="badge badge-loc-green">결제단계</span> <span class="badge-trigger">스크롤 50%</span></div>
+                  <div style="margin-top:4px"><span class="badge-device badge-pc">PC</span><span class="badge badge-loc-green">결제단계</span> <span class="badge-trigger">삼성카드 탭</span></div>
+                </td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">2026.01.01 ~ 04.30</td>
                 <td><span class="badge badge-exp">기간 만료</span></td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">2026.05.15</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">이운영</td>
-                <td><div class="action-btns"><button class="btn-edit" onclick="go('edit')">수정</button><button class="btn-del">삭제</button></div></td>
+                <td><div class="action-btns"><button class="btn-edit" onclick="goEdit('TOAST_003')">수정</button><button class="btn-del">삭제</button></div></td>
               </tr>
             </tbody>
           </table>
@@ -308,7 +371,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
         <div class="page-header">
           <div>
             <div class="page-title">콘텐츠 등록</div>
-            <div class="page-sub">저장 시 콘텐츠 ID가 자동 발급됩니다.</div>
+            <div class="page-sub">저장 시 DCR 기반 콘텐츠 ID가 자동 발급되며, MO/PC 노출·활성화 설정이 함께 저장됩니다.</div>
           </div>
           <button class="btn-ghost" onclick="go('list')"><i class="ti ti-arrow-left" aria-hidden="true"></i> 목록으로</button>
         </div>
@@ -316,26 +379,17 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
         <div class="form-card">
           <div class="form-section-title">기본 정보</div>
           <div class="form-row">
-            <label class="form-label">노출 위치 <span class="req">*</span></label>
+            <label class="form-label">상품 영역 <span class="req">*</span></label>
             <div>
-              <div class="loc-fields">
-                <div class="loc-field-row">
-                  <span class="loc-inline-label">상품 영역</span>
-                  <select class="form-control loc-select" id="r-loc-category" onchange="onLocCategoryChange('r')"></select>
-                </div>
-                <div class="loc-field-row">
-                  <span class="loc-inline-label">노출 단계</span>
-                  <select class="form-control loc-select" id="r-loc-stage" onchange="onLocStageChange('r')"></select>
-                </div>
-              </div>
-              <div class="form-hint">상품 영역·노출 단계는 설정값 기준으로 관리됩니다.</div>
+              <select class="form-control loc-select" id="r-loc-category" onchange="onLocCategoryChange('r')" style="max-width:200px"></select>
+              <div class="form-hint">패키지·항공 등 상품 영역별로 콘텐츠를 구분합니다.</div>
             </div>
           </div>
           <div class="form-row">
             <label class="form-label">노출 구간 <span class="req">*</span></label>
             <div>
-              <input type="text" class="form-control" placeholder="예) 여행자 정보 입력, 카드 결제 섹션" style="max-width:320px" />
-              <div class="form-hint">개발 연동 및 관리용으로 사용됩니다. 화면에는 노출되지 않습니다.</div>
+              <input type="text" class="form-control" id="r-section-label" placeholder="예) 여행자 정보 입력, 카드 결제 섹션" style="max-width:320px" oninput="updateConfigPreview('r')" />
+              <div class="form-hint">개발 연동 및 관리용 라벨입니다. 화면에는 노출되지 않습니다.</div>
             </div>
           </div>
           <div class="form-row">
@@ -360,6 +414,12 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
               <div class="form-hint">기간이 종료되면 자동으로 비노출 처리됩니다.</div>
             </div>
           </div>
+        </div>
+
+        <div class="form-card">
+          <div class="form-section-title">노출·활성화 설정 <span class="req-tag">필수</span></div>
+          <div class="form-hint" style="margin-top:-10px;margin-bottom:16px">운영자는 <strong>트리거 항목</strong>만 선택하면 됩니다. 셀렉터·URL 상세는 개발자용 설정에서 확인·수정합니다.</div>
+          <div class="platform-grid" id="r-platform-grid"></div>
         </div>
 
         <div class="form-card">
@@ -406,6 +466,12 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 
         <div class="form-card">
           <div class="form-section-title">미리보기</div>
+
+          <div class="preview-section">
+            <div class="preview-section-label">연동 설정 (개발 전달용)</div>
+            <div class="config-preview"><pre id="r-config-preview"></pre></div>
+            <div class="form-hint" style="margin-top:8px">콘텐츠 ID + 아래 설정을 개발팀에 전달하면 반자동 연동이 가능합니다.</div>
+          </div>
 
           <div class="preview-section">
             <div class="preview-section-label">토스트</div>
@@ -464,7 +530,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
         <div class="page-header">
           <div>
             <div class="page-title">콘텐츠 수정</div>
-            <div class="page-sub">예약 페이지 구간별 AgentToast에 노출될 콘텐츠를 수정합니다.</div>
+            <div class="page-sub">콘텐츠 ID 기준으로 MO/PC 노출·활성화 조건과 토스트 문구를 수정합니다.</div>
           </div>
           <button class="btn-ghost" onclick="go('list')"><i class="ti ti-arrow-left" aria-hidden="true"></i> 목록으로</button>
         </div>
@@ -474,31 +540,22 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
           <div class="form-row">
             <label class="form-label" style="color:var(--ht-text-secondary)">콘텐츠 ID</label>
             <div class="id-display-box">
-              <span class="id-value">TOAST_001</span>
-              <button class="btn-copy" onclick="copyId('TOAST_001')"><i class="ti ti-copy" style="font-size:13px" aria-hidden="true"></i> 복사</button>
+              <span class="id-value" id="e-content-id">TOAST_001</span>
+              <button class="btn-copy" id="e-copy-btn" onclick="copyId(document.getElementById('e-content-id').textContent)"><i class="ti ti-copy" style="font-size:13px" aria-hidden="true"></i> 복사</button>
             </div>
           </div>
           <div class="form-row">
-            <label class="form-label">노출 위치 <span class="req">*</span></label>
+            <label class="form-label">상품 영역 <span class="req">*</span></label>
             <div>
-              <div class="loc-fields">
-                <div class="loc-field-row">
-                  <span class="loc-inline-label">상품 영역</span>
-                  <select class="form-control loc-select" id="e-loc-category" onchange="onLocCategoryChange('e')"></select>
-                </div>
-                <div class="loc-field-row">
-                  <span class="loc-inline-label">노출 단계</span>
-                  <select class="form-control loc-select" id="e-loc-stage" onchange="onLocStageChange('e')"></select>
-                </div>
-              </div>
-              <div class="form-hint">상품 영역·노출 단계는 설정값 기준으로 관리됩니다.</div>
+              <select class="form-control loc-select" id="e-loc-category" onchange="onLocCategoryChange('e')" style="max-width:200px"></select>
+              <div class="form-hint">패키지·항공 등 상품 영역별로 콘텐츠를 구분합니다.</div>
             </div>
           </div>
           <div class="form-row">
             <label class="form-label">노출 구간 <span class="req">*</span></label>
             <div>
-              <input type="text" class="form-control" value="여행자 정보 입력" style="max-width:320px" />
-              <div class="form-hint">개발 연동 및 관리용으로 사용됩니다. 화면에는 노출되지 않습니다.</div>
+              <input type="text" class="form-control" id="e-section-label" value="여행자 정보 입력" style="max-width:320px" oninput="updateConfigPreview('e')" />
+              <div class="form-hint">개발 연동 및 관리용 라벨입니다. 화면에는 노출되지 않습니다.</div>
             </div>
           </div>
           <div class="form-row">
@@ -512,7 +569,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
             <label class="form-label">노출 기간 <span class="req">*</span></label>
             <div>
               <div class="date-range-wrap">
-                <input type="date" class="form-control" value="2026-06-01" />
+                <input type="date" class="form-control" id="edit-date-start" value="2026-06-01" />
                 <span class="date-sep">~</span>
                 <input type="date" class="form-control" id="edit-date-end" value="2026-08-31" />
               </div>
@@ -524,8 +581,14 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
           </div>
           <div class="form-row" style="margin-bottom:0">
             <label class="form-label" style="color:var(--ht-text-muted)">최종 수정</label>
-            <input class="form-control" value="2026.05.20 · 김기획" readonly style="max-width:220px" />
+            <input class="form-control" id="e-modified" value="2026.05.20 · 김기획" readonly style="max-width:220px" />
           </div>
+        </div>
+
+        <div class="form-card">
+          <div class="form-section-title">노출·활성화 설정 <span class="req-tag">필수</span></div>
+          <div class="form-hint" style="margin-top:-10px;margin-bottom:16px">운영자는 <strong>트리거 항목</strong>만 선택하면 됩니다. 셀렉터·URL 상세는 개발자용 설정에서 확인·수정합니다.</div>
+          <div class="platform-grid" id="e-platform-grid"></div>
         </div>
 
         <div class="form-card">
@@ -571,6 +634,12 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 
         <div class="form-card">
           <div class="form-section-title">미리보기</div>
+
+          <div class="preview-section">
+            <div class="preview-section-label">연동 설정 (개발 전달용)</div>
+            <div class="config-preview"><pre id="e-config-preview"></pre></div>
+            <div class="form-hint" style="margin-top:8px">콘텐츠 ID + 아래 설정을 개발팀에 전달하면 반자동 연동이 가능합니다.</div>
+          </div>
 
           <div class="preview-section">
             <div class="preview-section-label">토스트</div>
@@ -634,8 +703,68 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 function go(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + name).classList.add('active');
-  const titles = { list: '예약 페이지 툴팁 관리', register: '콘텐츠 등록', edit: '콘텐츠 수정' };
+  const titles = { list: '하이 도움말 콘텐츠 관리', register: '콘텐츠 등록', edit: '콘텐츠 수정' };
   document.getElementById('bc').textContent = titles[name] || '';
+}
+function goEdit(contentId) {
+  currentEditId = contentId;
+  loadEditSample(contentId);
+  go('edit');
+}
+function loadEditSample(contentId) {
+  const sample = SAMPLE_CONTENTS[contentId];
+  if (!sample) return;
+
+  locState.e.categoryId = sample.categoryId;
+  platformState.e = JSON.parse(JSON.stringify(sample.platform));
+
+  document.getElementById('e-content-id').textContent = contentId;
+  document.getElementById('e-section-label').value = sample.sectionLabel;
+  document.getElementById('e-title').value = sample.title;
+  document.getElementById('e-body').value = sample.body;
+  document.getElementById('e-highlight').value = sample.highlight;
+  document.getElementById('e-modified').value = sample.modified;
+
+  const alwaysCb = document.getElementById('edit-always');
+  const dateStart = document.getElementById('edit-date-start');
+  const dateEnd = document.getElementById('edit-date-end');
+  if (alwaysCb) {
+    alwaysCb.checked = sample.always;
+    if (dateStart) dateStart.value = sample.dateStart || '';
+    if (dateEnd) {
+      dateEnd.value = sample.dateEnd || '';
+      dateEnd.disabled = sample.always;
+    }
+  }
+
+  const chipsContainer = document.getElementById('e-chips');
+  chipsContainer.innerHTML = '';
+  chipCounts.e = 0;
+  previewState.e.activeChip = null;
+  document.getElementById('e-panel-main').classList.remove('hidden');
+  document.getElementById('e-panel-sub').classList.remove('active');
+
+  if (sample.chips.length) {
+    sample.chips.forEach((chip, i) => {
+      chipCounts.e = i + 1;
+      const div = document.createElement('div');
+      div.className = 'sub-card';
+      div.id = 'e-chip-' + chipCounts.e;
+      div.innerHTML = `<div class="sub-card-header">추천 질문 ${chipCounts.e} <button class="btn-remove" onclick="rmChip('e',${chipCounts.e})">✕ 삭제</button></div>${chipFormFieldsHtml()}`;
+      chipsContainer.appendChild(div);
+      div.querySelector('.chip-title').value = chip.title;
+      div.querySelector('.chip-body').value = chip.body;
+      div.querySelector('.chip-highlight').value = chip.highlight || '';
+      updateChipLimits(div);
+    });
+    document.getElementById('e-add-chip').style.display = sample.chips.length >= 2 ? 'none' : 'block';
+  } else {
+    document.getElementById('e-add-chip').style.display = 'block';
+  }
+
+  populateLocCategorySelect('e');
+  applyPlatformState('e');
+  updatePreview('e');
 }
 function copyId(id) {
   navigator.clipboard.writeText(id).catch(()=>{});
@@ -808,48 +937,114 @@ function bindChipInputs() {
   });
 }
 const EXPOSURE_LOCATIONS = [
-  {
-    id: 'package',
-    label: '패키지',
-    active: true,
-    stages: [
-      { id: 'booking', label: '예약단계' },
-      { id: 'payment', label: '결제단계' },
-    ],
-  },
-  {
-    id: 'flight',
-    label: '항공',
-    active: false,
-    stages: [
-      { id: 'search', label: '검색단계' },
-      { id: 'booking', label: '예약단계' },
-      { id: 'payment', label: '결제단계' },
-    ],
-  },
-  {
-    id: 'hotel',
-    label: '숙박',
-    active: false,
-    stages: [
-      { id: 'detail', label: '상품상세' },
-      { id: 'booking', label: '예약단계' },
-      { id: 'payment', label: '결제단계' },
-    ],
-  },
-  {
-    id: 'ticket',
-    label: '입장권',
-    active: false,
-    stages: [
-      { id: 'detail', label: '상품상세' },
-      { id: 'booking', label: '예약단계' },
-    ],
-  },
+  { id: 'package', label: '패키지', active: true },
+  { id: 'flight', label: '항공', active: false },
+  { id: 'hotel', label: '숙박', active: false },
+  { id: 'ticket', label: '입장권', active: false },
 ];
+const STAGE_OPTIONS = [
+  { id: 'booking', label: '예약단계', urlPattern: '/package/reservation/*' },
+  { id: 'payment', label: '결제단계', urlPattern: 'pay.hanatour.com/*', shared: true },
+];
+const TRIGGER_PRESETS = [
+  { label: '직접 입력 (개발자 설정)', itemLabel: '', selectorType: 'id', selectorValue: '' },
+  { label: '성인1 이름 (PC 예시)', itemLabel: '성인1 이름', selectorType: 'id', selectorValue: 'traveler-0-koName-2', selectorName: 'traveler-0-koName' },
+  { label: '성인1 영문이름', itemLabel: '성인1 영문이름', selectorType: 'id', selectorValue: 'traveler-0-enName-2' },
+  { label: '하나투어 삼성카드 선택 (카드 라디오)', itemLabel: '하나투어 삼성카드', selectorType: 'id', selectorValue: 'radioMethod_card01', selectorName: 'radioMethod_card', selectorInputValue: 'HANATOUR_SAMSUNG', elementType: 'radio' },
+  { label: '삼성카드 선택 (CSS)', itemLabel: '하나투어 삼성카드', selectorType: 'css', selectorValue: 'input[name="radioMethod_card"][value="HANATOUR_SAMSUNG"]', selectorInputValue: 'HANATOUR_SAMSUNG', elementType: 'radio' },
+  { label: '최종 결제금액 (결제 하단)', itemLabel: '최종 결제금액', selectorType: 'css', selectorValue: '.cont_inner.pay_total' },
+  { label: '여행자 정보 섹션', itemLabel: '여행자 정보 섹션', selectorType: 'css', selectorValue: '[data-section="traveler-info"]' },
+  { label: '카드 결제 섹션', itemLabel: '카드 결제 섹션', selectorType: 'css', selectorValue: '[data-section="card-payment"]' },
+];
+const SAMPLE_CONTENTS = {
+  TOAST_001: {
+    categoryId: 'package',
+    sectionLabel: '여행자 정보 입력',
+    title: '날짜와 인원을 미리 채워뒀어요.',
+    body: '**숙박자 정보**만 입력하시면 바로 예약 가능해요.',
+    highlight: '',
+    dateStart: '2026-06-01',
+    dateEnd: '2026-08-31',
+    always: false,
+    modified: '2026.05.20 · 김기획',
+    chips: [{ title: '인원 변경이 가능한가요?', body: '예약 후 **마이페이지**에서 인원 변경이 가능합니다.', highlight: '' }],
+    platform: {
+      mo: { enabled: true, stageId: 'booking', pageUrl: '/package/reservation/*', mode: 'interaction', scrollCondition: 'elementVisible', scrollPercent: 60, itemLabel: '성인1 이름', selectorType: 'id', selectorValue: 'traveler-0-koName-2', selectorName: 'traveler-0-koName', selectorInputValue: '', elementType: '' },
+      pc: { enabled: true, stageId: 'booking', pageUrl: '/package/reservation/*', mode: 'interaction', scrollCondition: 'elementVisible', scrollPercent: 60, itemLabel: '성인1 이름', selectorType: 'id', selectorValue: 'traveler-0-koName-2', selectorName: 'traveler-0-koName', selectorInputValue: '', elementType: '' },
+    },
+  },
+  TOAST_002: {
+    categoryId: 'package',
+    sectionLabel: '계약금/전액 결제 선택',
+    title: '계약금 결제, 어떤 걸 고르면 되나요?',
+    body: '**계약금 결제**는 일정 금액만 먼저 내고, **전액 결제**는 한 번에 모두 결제하는 방식이에요.',
+    highlight: '※ 하단 플로팅 버튼은 최종 결제금액 영역이 보일 때 함께 노출됩니다.',
+    dateStart: '',
+    dateEnd: '',
+    always: true,
+    modified: '2026.05.18 · 김기획',
+    chips: [],
+    platform: {
+      mo: { enabled: true, stageId: 'booking', pageUrl: '/package/reservation/*', mode: 'scroll', scrollCondition: 'elementVisible', scrollPercent: '', itemLabel: '최종 결제금액', selectorType: 'css', selectorValue: '.cont_inner.pay_total', selectorName: '', selectorInputValue: '', elementType: '' },
+      pc: { enabled: false, stageId: 'booking', pageUrl: '/package/reservation/*', mode: 'interaction', scrollCondition: 'elementVisible', scrollPercent: '', itemLabel: '', selectorType: 'id', selectorValue: '', selectorName: '', selectorInputValue: '', elementType: '' },
+    },
+  },
+  TOAST_003: {
+    categoryId: 'package',
+    sectionLabel: '카드 결제 섹션',
+    title: '하나투어 삼성카드, 혜택만 정리했어요',
+    body: '**하나투어 삼성카드**로 결제하면 할부 혜택과 마일리지 적립을 받을 수 있어요.',
+    highlight: '',
+    dateStart: '2026-01-01',
+    dateEnd: '2026-04-30',
+    always: false,
+    modified: '2026.05.15 · 이운영',
+    chips: [],
+    platform: {
+      mo: { enabled: true, stageId: 'payment', pageUrl: 'pay.hanatour.com/*', mode: 'scroll', scrollCondition: 'scrollPercentAndElement', scrollPercent: 50, itemLabel: '카드 결제 섹션', selectorType: 'css', selectorValue: '[data-section="card-payment"]', selectorName: '', selectorInputValue: '', elementType: '' },
+      pc: { enabled: true, stageId: 'payment', pageUrl: 'pay.hanatour.com/*', mode: 'interaction', scrollCondition: 'elementVisible', scrollPercent: '', itemLabel: '하나투어 삼성카드', selectorType: 'id', selectorValue: 'radioMethod_card01', selectorName: 'radioMethod_card', selectorInputValue: 'HANATOUR_SAMSUNG', elementType: 'radio' },
+    },
+  },
+};
+let currentEditId = 'TOAST_001';
+const DEFAULT_PLATFORM = {
+  mo: {
+    enabled: true,
+    stageId: 'booking',
+    pageUrl: '/package/reservation/*',
+    mode: 'interaction',
+    scrollCondition: 'elementVisible',
+    scrollPercent: 60,
+    itemLabel: '성인1 이름',
+    selectorType: 'id',
+    selectorValue: 'traveler-0-koName-2',
+    selectorName: 'traveler-0-koName',
+    selectorInputValue: '',
+    elementType: '',
+  },
+  pc: {
+    enabled: true,
+    stageId: 'booking',
+    pageUrl: '/package/reservation/*',
+    mode: 'interaction',
+    itemLabel: '성인1 이름',
+    selectorType: 'id',
+    selectorValue: 'traveler-0-koName-2',
+    selectorName: 'traveler-0-koName',
+    selectorInputValue: '',
+    elementType: '',
+  },
+};
 const locState = {
-  r: { categoryId: 'package', stageId: 'booking' },
-  e: { categoryId: 'package', stageId: 'booking' },
+  r: { categoryId: 'package' },
+  e: { categoryId: 'package' },
+};
+const platformState = {
+  r: {
+    mo: { enabled: true, stageId: 'booking', pageUrl: '/package/reservation/*', mode: 'scroll', scrollCondition: 'elementVisible', scrollPercent: '', itemLabel: '', selectorType: 'id', selectorValue: '', selectorName: '', selectorInputValue: '', elementType: '' },
+    pc: { enabled: false, stageId: 'booking', pageUrl: '/package/reservation/*', mode: 'interaction', itemLabel: '', selectorType: 'id', selectorValue: '', selectorName: '', selectorInputValue: '', elementType: '' },
+  },
+  e: JSON.parse(JSON.stringify(DEFAULT_PLATFORM)),
 };
 function getLocCategory(categoryId) {
   return EXPOSURE_LOCATIONS.find(c => c.id === categoryId);
@@ -862,32 +1057,463 @@ function populateLocCategorySelect(prefix) {
   ).join('');
   sel.value = locState[prefix].categoryId;
 }
-function populateLocStageSelect(prefix) {
-  const cat = getLocCategory(locState[prefix].categoryId);
-  const sel = document.getElementById(prefix + '-loc-stage');
-  if (!sel || !cat) return;
-  if (!cat.stages.some(s => s.id === locState[prefix].stageId)) {
-    locState[prefix].stageId = cat.stages[0].id;
-  }
-  sel.innerHTML = cat.stages.map(stage =>
-    `<option value="${stage.id}">${stage.label}</option>`
-  ).join('');
-  sel.value = locState[prefix].stageId;
-}
 function onLocCategoryChange(prefix) {
-  const sel = document.getElementById(prefix + '-loc-category');
-  locState[prefix].categoryId = sel.value;
-  locState[prefix].stageId = getLocCategory(sel.value).stages[0].id;
-  populateLocStageSelect(prefix);
+  locState[prefix].categoryId = document.getElementById(prefix + '-loc-category').value;
+  updateConfigPreview(prefix);
 }
-function onLocStageChange(prefix) {
-  locState[prefix].stageId = document.getElementById(prefix + '-loc-stage').value;
+function stageSelectHtml(prefix, platform) {
+  return STAGE_OPTIONS.map(s =>
+    `<option value="${s.id}">${s.label}</option>`
+  ).join('');
+}
+function presetSelectHtml(prefix, platform, field) {
+  return TRIGGER_PRESETS.map((p, i) =>
+    `<option value="${i}">${p.label}</option>`
+  ).join('');
+}
+function platformPanelHtml(prefix, platform) {
+  const isMo = platform === 'mo';
+  const badgeClass = isMo ? 'platform-badge-mo' : 'platform-badge-pc';
+  const label = isMo ? 'MO (모바일)' : 'PC (데스크톱)';
+  const modeSection = isMo ? `
+    <div class="form-row">
+      <label class="form-label">운영 방식 <span class="req">*</span></label>
+      <div class="mode-radio-group" id="${prefix}-${platform}-modes">
+        <label class="mode-radio" data-mode="scroll">
+          <input type="radio" name="${prefix}-${platform}-mode" value="scroll" onchange="onPlatformModeChange('${prefix}','${platform}')" />
+          <div class="mode-radio-text">
+            <div class="mode-radio-label">스크롤 방식</div>
+            <div class="mode-radio-desc">화면 스크롤 위치(%) + 특정 항목 도달 시 활성화</div>
+          </div>
+        </label>
+        <label class="mode-radio" data-mode="interaction">
+          <input type="radio" name="${prefix}-${platform}-mode" value="interaction" onchange="onPlatformModeChange('${prefix}','${platform}')" />
+          <div class="mode-radio-text">
+            <div class="mode-radio-label">인터렉션 방식</div>
+            <div class="mode-radio-desc">특정 항목 탭(클릭/포커스) 시 활성화</div>
+          </div>
+        </label>
+      </div>
+    </div>` : `
+    <div class="form-row">
+      <label class="form-label">운영 방식</label>
+      <div class="mode-fixed"><i class="ti ti-click" aria-hidden="true"></i> 인터렉션 방식 (고정)</div>
+      <div class="form-hint" style="margin-top:6px">PC는 인터렉션 방식만 지원합니다.</div>
+    </div>`;
+  return `
+    <div class="platform-panel" id="${prefix}-${platform}-panel">
+      <div class="platform-panel-header">
+        <span class="platform-panel-title"><span class="platform-badge ${badgeClass}">${isMo ? 'MO' : 'PC'}</span> ${label}</span>
+        <label class="toggle" title="노출 사용 여부">
+          <input type="checkbox" id="${prefix}-${platform}-enabled" onchange="onPlatformEnabledChange('${prefix}','${platform}')" />
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="platform-panel-body" id="${prefix}-${platform}-body">
+        <div class="form-row">
+          <label class="form-label">노출 단계 <span class="req">*</span></label>
+          <select class="form-control" id="${prefix}-${platform}-stage" onchange="onPlatformStageChange('${prefix}','${platform}')" style="max-width:160px">${stageSelectHtml(prefix, platform)}</select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">페이지 URL</label>
+          <div>
+            <input type="text" class="form-control" id="${prefix}-${platform}-url-display" readonly style="max-width:280px;background:var(--ht-gray-bg);font-size:12px" />
+            <div class="form-hint" id="${prefix}-${platform}-url-hint">노출 단계 선택 시 자동 설정됩니다. 변경은 개발자용 상세 설정에서 가능합니다.</div>
+            <input type="hidden" id="${prefix}-${platform}-url" />
+          </div>
+        </div>
+        ${modeSection}
+        <div id="${prefix}-${platform}-scroll-fields" class="trigger-fields" style="display:none">
+          <div class="form-row">
+            <label class="form-label">활성화 조건 <span class="req">*</span></label>
+            <div>
+              <select class="form-control" id="${prefix}-${platform}-scroll-condition" onchange="onScrollConditionChange('${prefix}','${platform}')" style="max-width:240px">
+                <option value="elementVisible">요소 노출 시</option>
+                <option value="scrollPercentAndElement">스크롤 % + 요소 도달</option>
+              </select>
+              <div class="form-hint">플로팅 버튼 등 하단 UI는 기준 요소 노출 시점에 함께 노출되는 경우가 많습니다.</div>
+            </div>
+          </div>
+          <div class="form-row" id="${prefix}-${platform}-scroll-pct-row">
+            <label class="form-label">보조 스크롤 %</label>
+            <div style="display:flex;align-items:center;gap:8px">
+              <input type="number" class="form-control" id="${prefix}-${platform}-scroll-pct" min="0" max="100" value="60" style="max-width:80px" oninput="onPlatformFieldChange('${prefix}','${platform}')" />
+              <span style="font-size:12px;color:var(--ht-text-secondary)">% 지점</span>
+            </div>
+          </div>
+          <div class="form-row" style="margin-bottom:0">
+            <label class="form-label">기준 요소 <span class="req">*</span></label>
+            <div>${triggerFieldsInner(prefix, platform, 'reach')}</div>
+          </div>
+        </div>
+        <div id="${prefix}-${platform}-interaction-fields" class="trigger-fields">
+          <div class="form-row" style="margin-bottom:0">
+            <label class="form-label">트리거 항목 <span class="req">*</span></label>
+            <div>${triggerFieldsInner(prefix, platform, 'trigger')}</div>
+          </div>
+        </div>
+        <div style="margin-top:12px">${platformDevAdvancedHtml(prefix, platform)}</div>
+      </div>
+    </div>`;
+}
+function platformDevAdvancedHtml(prefix, platform) {
+  return `
+    <button type="button" class="dev-advanced-toggle" id="${prefix}-${platform}-url-dev-toggle" onclick="toggleDevAdvanced('${prefix}','${platform}','url')">
+      개발자용 상세 설정 (페이지 URL) <i class="ti ti-chevron-down chevron" aria-hidden="true"></i>
+    </button>
+    <div class="dev-advanced-body" id="${prefix}-${platform}-url-dev" style="display:none">
+      <div class="dev-advanced-label">PAGE URL</div>
+      <input type="text" class="form-control selector-value" id="${prefix}-${platform}-url-edit" placeholder="/package/reservation/*" oninput="onPlatformUrlEdit('${prefix}','${platform}')" />
+      <div class="form-hint" style="margin-top:6px">반영 대상 URL 패턴입니다. 결제단계(pay.hanatour.com)는 패키지·호텔 공통입니다.</div>
+    </div>`;
+}
+function triggerFieldsInner(prefix, platform, kind) {
+  const presetId = `${prefix}-${platform}-${kind}-preset`;
+  const labelId = `${prefix}-${platform}-${kind}-label`;
+  const typeId = `${prefix}-${platform}-${kind}-type`;
+  const valueId = `${prefix}-${platform}-${kind}-value`;
+  const nameId = `${prefix}-${platform}-${kind}-name`;
+  const inputValueId = `${prefix}-${platform}-${kind}-input-value`;
+  return `
+    <div class="form-row">
+      <label class="form-label" style="font-size:11px">트리거 항목 <span class="req">*</span></label>
+      <select class="form-control" id="${presetId}" onchange="onTriggerPresetChange('${prefix}','${platform}','${kind}')" style="max-width:280px">${presetSelectHtml(prefix, platform, kind)}</select>
+    </div>
+    <div class="form-row">
+      <label class="form-label" style="font-size:11px">관리용 라벨</label>
+      <input type="text" class="form-control" id="${labelId}" placeholder="목록·관리 화면에 표시되는 이름" oninput="onPlatformFieldChange('${prefix}','${platform}')" />
+    </div>
+    <div class="form-row">
+      <label class="form-label" style="font-size:11px">선택 요약</label>
+      <div class="trigger-summary empty" id="${prefix}-${platform}-${kind}-summary">트리거 항목을 선택하세요</div>
+    </div>
+    <div class="form-row" style="margin-bottom:0">
+      <label class="form-label" style="font-size:11px"></label>
+      <div>
+        <button type="button" class="dev-advanced-toggle" id="${prefix}-${platform}-${kind}-dev-toggle" onclick="toggleDevAdvanced('${prefix}','${platform}','${kind}')">
+          개발자용 상세 설정 (셀렉터) <i class="ti ti-chevron-down chevron" aria-hidden="true"></i>
+        </button>
+        <div class="dev-advanced-body" id="${prefix}-${platform}-${kind}-dev" style="display:none">
+          <div class="dev-advanced-label">SELECTOR</div>
+          <div class="form-row">
+            <label class="form-label" style="font-size:11px">셀렉터 타입</label>
+            <select class="form-control selector-type" id="${typeId}" onchange="onPlatformFieldChange('${prefix}','${platform}')" style="max-width:120px">
+              <option value="id">id</option>
+              <option value="name">name</option>
+              <option value="css">css</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label class="form-label" style="font-size:11px">셀렉터 값</label>
+            <input type="text" class="form-control selector-value" id="${valueId}" placeholder="traveler-0-koName-2" oninput="onPlatformFieldChange('${prefix}','${platform}')" />
+          </div>
+          <div class="form-row">
+            <label class="form-label" style="font-size:11px">name 속성</label>
+            <input type="text" class="form-control selector-value" id="${nameId}" placeholder="traveler-0-koName" oninput="onPlatformFieldChange('${prefix}','${platform}')" />
+          </div>
+          <div class="form-row" style="margin-bottom:0">
+            <label class="form-label" style="font-size:11px">value 속성</label>
+            <input type="text" class="form-control selector-value" id="${inputValueId}" placeholder="HANATOUR_SAMSUNG" oninput="onPlatformFieldChange('${prefix}','${platform}')" />
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+function toggleDevAdvanced(prefix, platform, kind) {
+  const body = document.getElementById(`${prefix}-${platform}-${kind}-dev`);
+  const toggle = document.getElementById(`${prefix}-${platform}-${kind}-dev-toggle`);
+  if (!body || !toggle) return;
+  const open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'block';
+  toggle.classList.toggle('open', !open);
+}
+function setDevAdvancedOpen(prefix, platform, kind, open) {
+  const body = document.getElementById(`${prefix}-${platform}-${kind}-dev`);
+  const toggle = document.getElementById(`${prefix}-${platform}-${kind}-dev-toggle`);
+  if (body) body.style.display = open ? 'block' : 'none';
+  if (toggle) toggle.classList.toggle('open', open);
+}
+function updateUrlDisplay(prefix, platform) {
+  const url = document.getElementById(`${prefix}-${platform}-url`)?.value || '';
+  setValue(`${prefix}-${platform}-url-display`, url);
+  setValue(`${prefix}-${platform}-url-edit`, url);
+  const stageId = document.getElementById(`${prefix}-${platform}-stage`)?.value;
+  const stage = STAGE_OPTIONS.find(s => s.id === stageId);
+  const hint = document.getElementById(`${prefix}-${platform}-url-hint`);
+  if (hint) {
+    hint.textContent = stage?.shared
+      ? '결제단계 URL은 패키지·호텔 공통(pay.hanatour.com)입니다. 변경은 개발자용 상세 설정에서 가능합니다.'
+      : '노출 단계 선택 시 자동 설정됩니다. 변경은 개발자용 상세 설정에서 가능합니다.';
+  }
+}
+function onPlatformUrlEdit(prefix, platform) {
+  const val = document.getElementById(`${prefix}-${platform}-url-edit`)?.value || '';
+  setValue(`${prefix}-${platform}-url`, val);
+  updateUrlDisplay(prefix, platform);
+  onPlatformFieldChange(prefix, platform);
+}
+function updateTriggerSummary(prefix, platform, kind) {
+  const el = document.getElementById(`${prefix}-${platform}-${kind}-summary`);
+  if (!el) return;
+  const presetIdx = parseInt(document.getElementById(`${prefix}-${platform}-${kind}-preset`)?.value || '0', 10);
+  const preset = TRIGGER_PRESETS[presetIdx];
+  const label = document.getElementById(`${prefix}-${platform}-${kind}-label`)?.value?.trim();
+  const type = document.getElementById(`${prefix}-${platform}-${kind}-type`)?.value;
+  const value = document.getElementById(`${prefix}-${platform}-${kind}-value`)?.value?.trim();
+
+  if (!preset || presetIdx === 0 || !value) {
+    el.className = 'trigger-summary empty';
+    el.innerHTML = value
+      ? `<strong>${escapeHtml(label || '직접 입력')}</strong> · ${escapeHtml(type)}: ${escapeHtml(value)}`
+      : '트리거 항목을 선택하세요';
+    return;
+  }
+  el.className = 'trigger-summary';
+  const parts = [`<strong>${escapeHtml(label || preset.itemLabel || preset.label)}</strong>`];
+  if (preset.elementType === 'radio') parts.push('카드·라디오 선택');
+  else if (type === 'css') parts.push('영역 도달');
+  else parts.push('탭·포커스');
+  el.innerHTML = parts.join(' · ');
+}
+function initPlatformPanels() {
+  ['r', 'e'].forEach(prefix => {
+    const grid = document.getElementById(prefix + '-platform-grid');
+    if (!grid) return;
+    grid.innerHTML = platformPanelHtml(prefix, 'mo') + platformPanelHtml(prefix, 'pc');
+    applyPlatformState(prefix);
+  });
+}
+function applyPlatformState(prefix) {
+  ['mo', 'pc'].forEach(platform => {
+    const s = platformState[prefix][platform];
+    setChecked(`${prefix}-${platform}-enabled`, s.enabled);
+    setValue(`${prefix}-${platform}-stage`, s.stageId);
+    setValue(`${prefix}-${platform}-url`, s.pageUrl);
+    updateUrlDisplay(prefix, platform);
+    if (platform === 'mo') {
+      const radio = document.querySelector(`input[name="${prefix}-${platform}-mode"][value="${s.mode}"]`);
+      if (radio) radio.checked = true;
+      setValue(`${prefix}-${platform}-scroll-condition`, s.scrollCondition || 'elementVisible');
+      setValue(`${prefix}-${platform}-scroll-pct`, s.scrollPercent ?? '');
+      updateModeRadios(prefix, platform);
+      toggleMoModeFields(prefix, platform);
+      toggleScrollPctRow(prefix, platform);
+    }
+    const reachKind = platform === 'mo' && s.mode === 'scroll' ? 'reach' : 'trigger';
+    setTriggerFields(prefix, platform, 'trigger', s);
+    if (platform === 'mo') setTriggerFields(prefix, platform, 'reach', s);
+    updateTriggerSummary(prefix, platform, 'trigger');
+    if (platform === 'mo') updateTriggerSummary(prefix, platform, 'reach');
+    onPlatformEnabledChange(prefix, platform);
+  });
+  updateConfigPreview(prefix);
+}
+function setChecked(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.checked = !!val;
+}
+function setValue(id, val) {
+  const el = document.getElementById(id);
+  if (el != null && val != null) el.value = val;
+}
+function setTriggerFields(prefix, platform, kind, s) {
+  setValue(`${prefix}-${platform}-${kind}-label`, s.itemLabel);
+  setValue(`${prefix}-${platform}-${kind}-type`, s.selectorType);
+  setValue(`${prefix}-${platform}-${kind}-value`, s.selectorValue);
+  setValue(`${prefix}-${platform}-${kind}-name`, s.selectorName || '');
+  setValue(`${prefix}-${platform}-${kind}-input-value`, s.selectorInputValue || '');
+  const match = TRIGGER_PRESETS.findIndex(p =>
+    p.selectorValue === s.selectorValue &&
+    p.selectorType === s.selectorType &&
+    (p.selectorInputValue || '') === (s.selectorInputValue || '')
+  );
+  const presetIdx = match >= 0 ? match : 0;
+  setValue(`${prefix}-${platform}-${kind}-preset`, presetIdx);
+  setDevAdvancedOpen(prefix, platform, kind, presetIdx === 0);
+  updateTriggerSummary(prefix, platform, kind);
+}
+function onPlatformEnabledChange(prefix, platform) {
+  const enabled = document.getElementById(`${prefix}-${platform}-enabled`)?.checked;
+  platformState[prefix][platform].enabled = enabled;
+  const panel = document.getElementById(`${prefix}-${platform}-panel`);
+  const body = document.getElementById(`${prefix}-${platform}-body`);
+  if (panel) panel.classList.toggle('disabled', !enabled);
+  if (body) body.style.pointerEvents = enabled ? '' : 'none';
+  updateConfigPreview(prefix);
+}
+function onPlatformStageChange(prefix, platform) {
+  const stageId = document.getElementById(`${prefix}-${platform}-stage`).value;
+  const stage = STAGE_OPTIONS.find(s => s.id === stageId);
+  platformState[prefix][platform].stageId = stageId;
+  if (stage) {
+    setValue(`${prefix}-${platform}-url`, stage.urlPattern);
+    platformState[prefix][platform].pageUrl = stage.urlPattern;
+  }
+  updateUrlDisplay(prefix, platform);
+  updateConfigPreview(prefix);
+}
+function onPlatformModeChange(prefix, platform) {
+  const mode = document.querySelector(`input[name="${prefix}-${platform}-mode"]:checked`)?.value || 'interaction';
+  platformState[prefix][platform].mode = mode;
+  updateModeRadios(prefix, platform);
+  toggleMoModeFields(prefix, platform);
+  syncPlatformStateFromForm(prefix, platform);
+  updateConfigPreview(prefix);
+}
+function updateModeRadios(prefix, platform) {
+  const mode = document.querySelector(`input[name="${prefix}-${platform}-mode"]:checked`)?.value;
+  document.querySelectorAll(`#${prefix}-${platform}-modes .mode-radio`).forEach(el => {
+    el.classList.toggle('selected', el.dataset.mode === mode);
+  });
+}
+function toggleMoModeFields(prefix, platform) {
+  const mode = platformState[prefix][platform].mode;
+  const scrollEl = document.getElementById(`${prefix}-${platform}-scroll-fields`);
+  const interEl = document.getElementById(`${prefix}-${platform}-interaction-fields`);
+  if (scrollEl) scrollEl.style.display = mode === 'scroll' ? 'block' : 'none';
+  if (interEl) interEl.style.display = mode === 'interaction' ? 'block' : 'none';
+}
+function toggleScrollPctRow(prefix, platform) {
+  const condition = document.getElementById(`${prefix}-${platform}-scroll-condition`)?.value || 'elementVisible';
+  const row = document.getElementById(`${prefix}-${platform}-scroll-pct-row`);
+  const pctInput = document.getElementById(`${prefix}-${platform}-scroll-pct`);
+  if (row) row.style.display = condition === 'scrollPercentAndElement' ? '' : 'none';
+  if (pctInput) pctInput.disabled = condition !== 'scrollPercentAndElement';
+}
+function onScrollConditionChange(prefix, platform) {
+  platformState[prefix][platform].scrollCondition = document.getElementById(`${prefix}-${platform}-scroll-condition`).value;
+  toggleScrollPctRow(prefix, platform);
+  onPlatformFieldChange(prefix, platform);
+}
+function onTriggerPresetChange(prefix, platform, kind) {
+  const idx = parseInt(document.getElementById(`${prefix}-${platform}-${kind}-preset`).value, 10);
+  const preset = TRIGGER_PRESETS[idx];
+  if (!preset) return;
+  if (!preset.selectorValue) {
+    setValue(`${prefix}-${platform}-${kind}-label`, '');
+    setValue(`${prefix}-${platform}-${kind}-type`, 'id');
+    setValue(`${prefix}-${platform}-${kind}-value`, '');
+    setValue(`${prefix}-${platform}-${kind}-name`, '');
+    setValue(`${prefix}-${platform}-${kind}-input-value`, '');
+    platformState[prefix][platform].elementType = '';
+    setDevAdvancedOpen(prefix, platform, kind, true);
+    updateTriggerSummary(prefix, platform, kind);
+    onPlatformFieldChange(prefix, platform);
+    return;
+  }
+  setValue(`${prefix}-${platform}-${kind}-label`, preset.itemLabel);
+  setValue(`${prefix}-${platform}-${kind}-type`, preset.selectorType);
+  setValue(`${prefix}-${platform}-${kind}-value`, preset.selectorValue);
+  setValue(`${prefix}-${platform}-${kind}-name`, preset.selectorName || '');
+  setValue(`${prefix}-${platform}-${kind}-input-value`, preset.selectorInputValue || '');
+  platformState[prefix][platform].elementType = preset.elementType || '';
+  setDevAdvancedOpen(prefix, platform, kind, false);
+  updateTriggerSummary(prefix, platform, kind);
+  onPlatformFieldChange(prefix, platform);
+}
+function onPlatformFieldChange(prefix, platform) {
+  syncPlatformStateFromForm(prefix, platform);
+  updateTriggerSummary(prefix, platform, 'trigger');
+  if (platform === 'mo') updateTriggerSummary(prefix, platform, 'reach');
+  updateConfigPreview(prefix);
+}
+function syncPlatformStateFromForm(prefix, platform) {
+  const s = platformState[prefix][platform];
+  s.enabled = document.getElementById(`${prefix}-${platform}-enabled`)?.checked;
+  s.stageId = document.getElementById(`${prefix}-${platform}-stage`)?.value;
+  s.pageUrl = document.getElementById(`${prefix}-${platform}-url`)?.value || '';
+  if (platform === 'mo') {
+    s.mode = document.querySelector(`input[name="${prefix}-${platform}-mode"]:checked`)?.value || 'interaction';
+    s.scrollCondition = document.getElementById(`${prefix}-${platform}-scroll-condition`)?.value || 'elementVisible';
+    const pctRaw = document.getElementById(`${prefix}-${platform}-scroll-pct`)?.value;
+    s.scrollPercent = pctRaw === '' || pctRaw == null ? '' : parseInt(pctRaw, 10) || 0;
+    if (s.mode === 'scroll') {
+      s.itemLabel = document.getElementById(`${prefix}-${platform}-reach-label`)?.value || '';
+      s.selectorType = document.getElementById(`${prefix}-${platform}-reach-type`)?.value || 'id';
+      s.selectorValue = document.getElementById(`${prefix}-${platform}-reach-value`)?.value || '';
+      s.selectorName = document.getElementById(`${prefix}-${platform}-reach-name`)?.value || '';
+      s.selectorInputValue = document.getElementById(`${prefix}-${platform}-reach-input-value`)?.value || '';
+    } else {
+      s.itemLabel = document.getElementById(`${prefix}-${platform}-trigger-label`)?.value || '';
+      s.selectorType = document.getElementById(`${prefix}-${platform}-trigger-type`)?.value || 'id';
+      s.selectorValue = document.getElementById(`${prefix}-${platform}-trigger-value`)?.value || '';
+      s.selectorName = document.getElementById(`${prefix}-${platform}-trigger-name`)?.value || '';
+      s.selectorInputValue = document.getElementById(`${prefix}-${platform}-trigger-input-value`)?.value || '';
+    }
+  } else {
+    s.mode = 'interaction';
+    s.itemLabel = document.getElementById(`${prefix}-${platform}-trigger-label`)?.value || '';
+    s.selectorType = document.getElementById(`${prefix}-${platform}-trigger-type`)?.value || 'id';
+    s.selectorValue = document.getElementById(`${prefix}-${platform}-trigger-value`)?.value || '';
+    s.selectorName = document.getElementById(`${prefix}-${platform}-trigger-name`)?.value || '';
+    s.selectorInputValue = document.getElementById(`${prefix}-${platform}-trigger-input-value`)?.value || '';
+  }
+}
+function buildSelectorConfig(s) {
+  const cfg = { type: s.selectorType, value: s.selectorValue };
+  if (s.selectorName) cfg.name = s.selectorName;
+  if (s.selectorInputValue) cfg.inputValue = s.selectorInputValue;
+  if (s.elementType) cfg.inputType = s.elementType;
+  return cfg;
+}
+function buildPlatformConfig(prefix, platform) {
+  const s = platformState[prefix][platform];
+  if (!s.enabled) return null;
+  const stage = STAGE_OPTIONS.find(st => st.id === s.stageId);
+  const base = {
+    device: platform.toUpperCase(),
+    stage: stage?.label || s.stageId,
+    pageUrl: s.pageUrl,
+    mode: platform === 'pc' ? 'interaction' : s.mode,
+  };
+  if (platform === 'mo' && s.mode === 'scroll') {
+    const trigger = {
+      type: 'scroll',
+      condition: s.scrollCondition || 'elementVisible',
+      target: { label: s.itemLabel, selector: buildSelectorConfig(s) },
+    };
+    if (trigger.condition === 'scrollPercentAndElement' && s.scrollPercent !== '') {
+      trigger.scrollPercent = s.scrollPercent;
+    }
+    return { ...base, trigger };
+  }
+  return {
+    ...base,
+    trigger: {
+      type: 'interaction',
+      event: platform === 'mo' ? 'tap' : 'click',
+      target: { label: s.itemLabel, selector: buildSelectorConfig(s) },
+    },
+  };
+}
+function syntaxHighlightJson(obj) {
+  const json = JSON.stringify(obj, null, 2);
+  return json
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"([^"]+)":/g, '<span class="key">"$1"</span>:')
+    .replace(/: "([^"]*)"/g, ': <span class="str">"$1"</span>')
+    .replace(/: (\d+)/g, ': <span class="num">$1</span>')
+    .replace(/: (true|false)/g, ': <span class="bool">$1</span>');
+}
+function updateConfigPreview(prefix) {
+  ['mo', 'pc'].forEach(p => syncPlatformStateFromForm(prefix, p));
+  const contentId = prefix === 'e' ? currentEditId : '(저장 시 자동 발급)';
+  const category = getLocCategory(locState[prefix].categoryId);
+  const sectionLabel = document.getElementById(`${prefix}-section-label`)?.value || '';
+  const config = {
+    contentId,
+    category: category?.label || locState[prefix].categoryId,
+    sectionLabel,
+    exposure: {
+      mo: buildPlatformConfig(prefix, 'mo'),
+      pc: buildPlatformConfig(prefix, 'pc'),
+    },
+  };
+  const el = document.getElementById(`${prefix}-config-preview`);
+  if (el) el.innerHTML = syntaxHighlightJson(config);
 }
 function initLocPickers() {
-  ['r', 'e'].forEach(prefix => {
-    populateLocCategorySelect(prefix);
-    populateLocStageSelect(prefix);
-  });
+  ['r', 'e'].forEach(prefix => populateLocCategorySelect(prefix));
 }
 function rmChip(p, n) {
   const el = document.getElementById(p+'-chip-'+n);
@@ -916,8 +1542,10 @@ function addChip(p) {
 }
 bindChipInputs();
 initLocPickers();
+initPlatformPanels();
+loadEditSample('TOAST_001');
 updateAllChipLimits('r');
-updatePreview('e');
+updatePreview('r');
 </script>
 </body>
 </html>

@@ -86,9 +86,9 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 .filter-label { font-size: 12px; color: var(--ht-text-secondary); white-space: nowrap; font-weight: 500; }
 .filter-select { border: 1px solid var(--ht-gray-border); border-radius: 6px; padding: 6px 28px 6px 10px; font-size: 13px; color: var(--ht-text-primary); background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2373747A'/%3E%3C/svg%3E") no-repeat right 10px center; -webkit-appearance:none; appearance:none; cursor: pointer; }
 .filter-select:focus { outline: none; border-color: var(--ht-purple); }
-.filter-input { border: 1px solid var(--ht-gray-border); border-radius: 6px; padding: 6px 10px; font-size: 13px; color: var(--ht-text-primary); background: #fff; min-width: 160px; flex: 1; }
+.filter-input { border: 1px solid var(--ht-gray-border); border-radius: 6px; padding: 6px 10px; font-size: 13px; color: var(--ht-text-primary); background: #fff; width: 200px; flex: none; }
 .filter-input:focus { outline: none; border-color: var(--ht-purple); }
-.filter-search-group { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
+.filter-search-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .filter-sep { color: var(--ht-gray-border); font-size: 13px; }
 .filter-btn { background: var(--ht-purple); color: #fff; border: none; border-radius: 6px; padding: 7px 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
 .filter-btn:hover { background: #4e22a0; }
@@ -155,6 +155,8 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 .date-range-wrap .form-control { max-width: 210px; }
 .date-range-wrap input[type=datetime-local] { min-width: 190px; }
 .list-period { font-size: 12px; color: var(--ht-text-secondary); line-height: 1.45; white-space: nowrap; padding-top: 10px; padding-bottom: 10px; }
+.list-stage { font-size: 12px; color: var(--ht-text-secondary); line-height: 1.45; white-space: nowrap; padding-top: 10px; padding-bottom: 10px; }
+.list-label { font-size: 12px; color: var(--ht-text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .list-status { font-size: 12px; color: var(--ht-text-secondary); white-space: nowrap; }
 .date-sep { font-size: 13px; color: var(--ht-text-muted); flex-shrink: 0; }
 .date-checkbox-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
@@ -354,7 +356,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
                 <th style="width:22%; min-width:180px">타이틀</th>
                 <th style="width:72px">속성 구분</th>
                 <th style="width:88px">노출 화면</th>
-                <th style="width:110px">관리용 라벨</th>
+                <th style="width:140px">관리용 라벨</th>
                 <th style="width:110px">탭 항목</th>
                 <th style="width:118px">노출 기간</th>
                 <th style="width:80px">상태</th>
@@ -365,33 +367,33 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
             <tbody>
               <tr>
                 <td><input type="checkbox" /></td>
-                <td style="font-size:12px;color:var(--ht-text-secondary);text-align:center">1</td>
-                <td class="list-title-cell">
-                  <button type="button" class="list-title-link" onclick="goEdit('TOAST_001')">날짜와 인원을 미리 채워뒀어요.</button>
-                </td>
-                <td style="font-size:12px;color:var(--ht-text-secondary)">패키지</td>
-                <td style="font-size:12px;color:var(--ht-text-secondary)">패키지_예약하기</td>
-                <td style="font-size:12px;color:var(--ht-text-secondary)">여행자 정보 입력</td>
-                <td style="font-size:12px;color:var(--ht-text-secondary)">성인1 한글명 입력</td>
-                <td class="list-period">2026.06.01 00:00 ~<br>2026.08.31 23:59</td>
-                <td class="list-status">노출중</td>
-                <td class="list-period">2026.05.20<br>10:06:42</td>
-                <td style="font-size:12px;color:var(--ht-text-secondary)">HG123</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" /></td>
                 <td style="font-size:12px;color:var(--ht-text-secondary);text-align:center">2</td>
                 <td class="list-title-cell">
                   <button type="button" class="list-title-link" onclick="goEdit('TOAST_003')">하나투어 삼성카드, 혜택만 정리했어요</button>
                 </td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">패키지</td>
-                <td style="font-size:12px;color:var(--ht-text-secondary)">패키지_결제하기</td>
-                <td style="font-size:12px;color:var(--ht-text-secondary)">카드 결제 섹션</td>
+                <td class="list-stage">패키지_<br>결제하기</td>
+                <td class="list-label" title="카드 결제 섹션">카드 결제 섹션</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">하나투어 삼성카드 클릭</td>
                 <td class="list-period">2026.01.01 00:00 ~<br>2026.04.30 23:59</td>
                 <td class="list-status">기간만료</td>
                 <td class="list-period">2026.05.15<br>13:58:34</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">HG456</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td style="font-size:12px;color:var(--ht-text-secondary);text-align:center">1</td>
+                <td class="list-title-cell">
+                  <button type="button" class="list-title-link" onclick="goEdit('TOAST_001')">날짜와 인원을 미리 채워뒀어요.</button>
+                </td>
+                <td style="font-size:12px;color:var(--ht-text-secondary)">패키지</td>
+                <td class="list-stage">패키지_<br>예약하기</td>
+                <td class="list-label" title="여행자 정보 입력">여행자 정보 입력</td>
+                <td style="font-size:12px;color:var(--ht-text-secondary)">성인1 한글명 입력</td>
+                <td class="list-period">2026.06.01 00:00 ~<br>2026.08.31 23:59</td>
+                <td class="list-status">노출중</td>
+                <td class="list-period">2026.05.20<br>10:06:42</td>
+                <td style="font-size:12px;color:var(--ht-text-secondary)">HG123</td>
               </tr>
             </tbody>
           </table>
@@ -1095,11 +1097,11 @@ const STAGE_TAB_ITEMS = {
     { id: 'hana-card-click', label: '하나카드 클릭' },
   ],
 };
-const LIST_DISPLAY_ORDER = ['TOAST_001', 'TOAST_003'];
+const LIST_DISPLAY_ORDER = ['TOAST_003', 'TOAST_001'];
+const CONTENT_SEQUENCE_IDS = { TOAST_001: 1, TOAST_003: 2 };
 
 function getListNo(contentId) {
-  const index = LIST_DISPLAY_ORDER.indexOf(contentId);
-  return index >= 0 ? index + 1 : '-';
+  return CONTENT_SEQUENCE_IDS[contentId] ?? '-';
 }
 
 const SAMPLE_CONTENTS = {
@@ -1133,7 +1135,7 @@ const SAMPLE_CONTENTS = {
     exposureEnabled: true,
     status: '기간만료',
     createdBy: 'HG456',
-    createdAt: '2026.01.05 14:20:11',
+    createdAt: '2026.06.15 11:20:00',
     modifiedBy: 'HG456',
     modifiedAt: '2026.05.15 13:58:34',
     chips: [],

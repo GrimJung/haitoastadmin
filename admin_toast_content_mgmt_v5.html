@@ -58,7 +58,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 
 /* ── 메인 콘텐츠 ── */
 .content { flex: 1; min-width: 0; padding: 20px 24px; overflow-x: hidden; overflow-y: auto; }
-.screen { display: none; min-width: 1100px; }
+.screen { display: none; min-width: 1040px; }
 .screen.active { display: block; }
 
 .breadcrumb { font-size: 12px; color: var(--ht-text-muted); display: flex; align-items: center; gap: 5px; margin-bottom: 12px; white-space: nowrap; }
@@ -94,7 +94,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 .filter-btn:hover { background: #4e22a0; }
 
 .list-card { background: #fff; border: 1px solid var(--ht-gray-border); border-radius: 8px; overflow: hidden; }
-.list-table { width: 100%; min-width: 1100px; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+.list-table { width: 100%; min-width: 1040px; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
 .list-table thead tr { background: var(--ht-gray-bg); }
 .list-table th { padding: 10px 12px; text-align: left; font-size: 12px; font-weight: 600; color: var(--ht-text-secondary); border-bottom: 1px solid var(--ht-gray-border); white-space: nowrap; overflow: hidden; }
 .list-table td { padding: 11px 12px; border-bottom: 1px solid #F0F0F2; color: var(--ht-text-primary); vertical-align: middle; overflow: hidden; }
@@ -149,8 +149,10 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 .form-control.over-limit:focus, .form-textarea.over-limit:focus { box-shadow: 0 0 0 3px #FFF0F0; }
 .form-hint { font-size: 12px; color: var(--ht-text-muted); margin-top: 5px; line-height: 1.5; }
 
-.date-range-wrap { display: flex; align-items: center; gap: 10px; }
-.date-range-wrap .form-control { max-width: 160px; }
+.date-range-wrap { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; }
+.date-range-wrap .form-control { max-width: 210px; }
+.date-range-wrap input[type=datetime-local] { min-width: 190px; }
+.list-period { font-size: 12px; color: var(--ht-text-secondary); line-height: 1.45; white-space: nowrap; padding-top: 10px; padding-bottom: 10px; }
 .date-sep { font-size: 13px; color: var(--ht-text-muted); flex-shrink: 0; }
 .date-checkbox-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
 .date-checkbox-row input[type=checkbox] { accent-color: var(--ht-purple); width: 14px; height: 14px; }
@@ -206,7 +208,15 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 .form-footer { display: flex; justify-content: flex-end; gap: 10px; padding-top: 4px; }
 .toast-copied { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #313339; color: #fff; border-radius: 8px; padding: 8px 16px; font-size: 13px; display: none; z-index: 999; }
 
-.exposure-fields { max-width: 640px; }
+.confirm-modal { display: none; position: fixed; inset: 0; z-index: 1000; align-items: center; justify-content: center; }
+.confirm-modal.open { display: flex; }
+.confirm-modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.45); }
+.confirm-modal-box { position: relative; background: #fff; border-radius: 10px; padding: 24px; width: 360px; max-width: calc(100vw - 40px); box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
+.confirm-modal-title { font-size: 15px; font-weight: 700; color: var(--ht-text-primary); margin-bottom: 10px; }
+.confirm-modal-msg { font-size: 13px; color: var(--ht-text-secondary); line-height: 1.6; margin-bottom: 22px; white-space: pre-line; }
+.confirm-modal-actions { display: flex; justify-content: flex-end; gap: 8px; }
+
+.exposure-fields { display: contents; }
 
 .list-table td.list-title-cell { min-width: 180px; }
 .list-title-link { font-weight: 500; color: #2563EB; text-decoration: underline; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; background: none; border: none; padding: 0; font-size: 13px; font-family: inherit; text-align: left; width: 100%; }
@@ -294,7 +304,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
         </div>
 
         <div class="filter-bar">
-          <span class="filter-label">노출 영역</span>
+          <span class="filter-label">노출 화면</span>
           <select class="filter-select">
             <option>전체</option>
             <option>패키지_예약하기</option>
@@ -310,6 +320,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
           <div class="filter-search-group">
             <select class="filter-select" id="search-type" onchange="updateSearchPlaceholder()">
               <option value="title">타이틀</option>
+              <option value="label">관리용 라벨</option>
               <option value="id">ID</option>
               <option value="tab">탭 항목</option>
             </select>
@@ -330,11 +341,12 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
                 <th style="width:28px"><input type="checkbox" /></th>
                 <th style="width:48px">ID</th>
                 <th style="width:22%; min-width:180px">타이틀</th>
-                <th style="width:120px">노출 영역</th>
+                <th style="width:120px">노출 화면</th>
+                <th style="width:110px">관리용 라벨</th>
                 <th style="width:110px">탭 항목</th>
-                <th style="width:110px">노출 기간</th>
-                <th style="width:72px">상태</th>
-                <th style="width:110px">최종수정일시</th>
+                <th style="width:118px">노출 기간</th>
+                <th style="width:64px">상태</th>
+                <th style="width:128px">최종수정일시</th>
                 <th style="width:72px">최종수정자</th>
               </tr>
             </thead>
@@ -346,8 +358,9 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
                   <button type="button" class="list-title-link" onclick="goEdit('TOAST_001')">날짜와 인원을 미리 채워뒀어요.</button>
                 </td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">패키지_예약하기</td>
-                <td style="font-size:12px;color:var(--ht-text-secondary)">성인1 이름</td>
-                <td style="font-size:12px;color:var(--ht-text-secondary)">2026.06.01 ~ 08.31</td>
+                <td style="font-size:12px;color:var(--ht-text-secondary)">여행자 정보 입력</td>
+                <td style="font-size:12px;color:var(--ht-text-secondary)">성인1 한글명 입력</td>
+                <td class="list-period">2026.06.01 00:00 ~<br>2026.08.31 23:59</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">노출중</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">2026.05.20 10:06:42</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">HG123</td>
@@ -359,8 +372,9 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
                   <button type="button" class="list-title-link" onclick="goEdit('TOAST_003')">하나투어 삼성카드, 혜택만 정리했어요</button>
                 </td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">패키지_결제하기</td>
-                <td style="font-size:12px;color:var(--ht-text-secondary)">하나투어 삼성카드</td>
-                <td style="font-size:12px;color:var(--ht-text-secondary)">2026.01.01 ~ 04.30</td>
+                <td style="font-size:12px;color:var(--ht-text-secondary)">카드 결제 섹션</td>
+                <td style="font-size:12px;color:var(--ht-text-secondary)">하나투어 삼성카드 클릭</td>
+                <td class="list-period">2026.01.01 00:00 ~<br>2026.04.30 23:59</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">기간만료</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">2026.05.15 13:58:34</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">HG456</td>
@@ -404,15 +418,18 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
           <div class="form-section-title">기본 정보</div>
           <div class="form-grid-2">
             <div class="form-field">
-              <label class="form-field-label">상품 영역 <span class="req">*</span></label>
+              <label class="form-field-label">속성 구분 <span class="req">*</span></label>
               <select class="form-control loc-select" id="r-loc-category" onchange="onLocCategoryChange('r')"></select>
-              <div class="form-hint">패키지·항공 등 상품 영역별로 콘텐츠를 구분합니다.</div>
+              <div class="form-hint">패키지·항공 등 속성별로 콘텐츠를 구분합니다.</div>
             </div>
             <div class="form-field">
-              <label class="form-field-label">노출 구간 <span class="req">*</span></label>
-              <input type="text" class="form-control" id="r-section-label" placeholder="예) 여행자 정보 입력, 카드 결제 섹션" />
-              <div class="form-hint">개발 연동 및 관리용 라벨입니다. 화면에는 노출되지 않습니다.</div>
+              <label class="form-field-label">관리용 라벨 <span class="req">*</span></label>
+              <input type="text" class="form-control" id="r-section-label" maxlength="20" placeholder="예) 여행자 정보 입력, 카드 결제 섹션" oninput="updateContentLimits('r')" />
+              <div class="char-count" id="r-section-label-count"><span id="r-section-label-len">0</span>/20자</div>
+              <div class="char-warn" id="r-section-label-warn">최대 20자까지 입력할 수 있습니다.</div>
+              <div class="form-hint">목록·관리 화면에 표시되는 이름입니다.</div>
             </div>
+            <div class="exposure-fields" id="r-exposure-fields"></div>
             <div class="form-field">
               <label class="form-field-label">노출 상태 <span class="req">*</span></label>
               <div style="display:flex;align-items:center;gap:10px;padding-top:2px">
@@ -423,9 +440,9 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
             <div class="form-field">
               <label class="form-field-label">노출 기간 <span class="req">*</span></label>
               <div class="date-range-wrap">
-                <input type="date" class="form-control" id="reg-date-start" value="2026-06-01" />
+                <input type="datetime-local" class="form-control" id="reg-date-start" value="2026-06-01T00:00" />
                 <span class="date-sep">~</span>
-                <input type="date" class="form-control" id="reg-date-end" value="2026-08-31" />
+                <input type="datetime-local" class="form-control" id="reg-date-end" value="2026-08-31T23:59" />
               </div>
               <div class="date-checkbox-row">
                 <input type="checkbox" id="reg-always" onchange="toggleAlways('reg')" />
@@ -458,12 +475,6 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="form-card">
-          <div class="form-section-title">노출·활성화 설정 <span class="req-tag">필수</span></div>
-          <div class="form-hint" style="margin-top:-10px;margin-bottom:16px"><strong>노출 단계</strong>와 <strong>탭 항목</strong>을 선택하고, 목록에 표시할 관리용 라벨을 입력하세요.</div>
-          <div class="exposure-fields" id="r-exposure-fields"></div>
         </div>
 
         <div class="form-card">
@@ -573,7 +584,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
           <span>수정</span>
         </div>
         <div class="page-header row">
-          <div class="page-title">콘텐츠 수정</div>
+          <div class="page-title">H-AI 도움말 관리</div>
           <button class="btn-ghost" onclick="go('list')"><i class="ti ti-arrow-left" aria-hidden="true"></i> 목록으로</button>
         </div>
 
@@ -581,13 +592,16 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
           <div class="form-section-title">기본 정보</div>
           <div class="form-grid-2">
             <div class="form-field">
-              <label class="form-field-label">상품 영역 <span class="req">*</span></label>
+              <label class="form-field-label">속성 구분 <span class="req">*</span></label>
               <select class="form-control loc-select" id="e-loc-category" onchange="onLocCategoryChange('e')"></select>
             </div>
             <div class="form-field">
-              <label class="form-field-label">노출 구간 <span class="req">*</span></label>
-              <input type="text" class="form-control" id="e-section-label" value="여행자 정보 입력" />
+              <label class="form-field-label">관리용 라벨 <span class="req">*</span></label>
+              <input type="text" class="form-control" id="e-section-label" maxlength="20" value="여행자 정보 입력" oninput="updateContentLimits('e')" />
+              <div class="char-count" id="e-section-label-count"><span id="e-section-label-len">0</span>/20자</div>
+              <div class="char-warn" id="e-section-label-warn">최대 20자까지 입력할 수 있습니다.</div>
             </div>
+            <div class="exposure-fields" id="e-exposure-fields"></div>
             <div class="form-field">
               <label class="form-field-label">노출 상태 <span class="req">*</span></label>
               <div style="display:flex;align-items:center;gap:10px;padding-top:2px">
@@ -598,9 +612,9 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
             <div class="form-field">
               <label class="form-field-label">노출 기간 <span class="req">*</span></label>
               <div class="date-range-wrap">
-                <input type="date" class="form-control" id="edit-date-start" value="2026-06-01" />
+                <input type="datetime-local" class="form-control" id="edit-date-start" value="2026-06-01T00:00" />
                 <span class="date-sep">~</span>
-                <input type="date" class="form-control" id="edit-date-end" value="2026-08-31" />
+                <input type="datetime-local" class="form-control" id="edit-date-end" value="2026-08-31T23:59" />
               </div>
               <div class="date-checkbox-row">
                 <input type="checkbox" id="edit-always" onchange="toggleAlways('edit')" />
@@ -610,10 +624,6 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
           </div>
           <div class="form-info-panel">
             <div class="form-info-grid">
-              <div class="form-info-item form-info-item-full">
-                <span class="form-info-label">ID</span>
-                <span class="form-info-value" id="e-list-id">1</span>
-              </div>
               <div class="form-info-item">
                 <span class="form-info-label">최초 등록자</span>
                 <span class="form-info-value" id="e-created-by">HG123</span>
@@ -632,12 +642,6 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="form-card">
-          <div class="form-section-title">노출·활성화 설정 <span class="req-tag">필수</span></div>
-          <div class="form-hint" style="margin-top:-10px;margin-bottom:16px"><strong>노출 단계</strong>와 <strong>탭 항목</strong>을 선택하고, 목록에 표시할 관리용 라벨을 입력하세요.</div>
-          <div class="exposure-fields" id="e-exposure-fields"></div>
         </div>
 
         <div class="form-card">
@@ -740,6 +744,17 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
   </div>
 </div>
 
+<div class="confirm-modal" id="delete-confirm-modal">
+  <div class="confirm-modal-backdrop" onclick="closeDeleteConfirm()"></div>
+  <div class="confirm-modal-box">
+    <div class="confirm-modal-title">삭제 확인</div>
+    <div class="confirm-modal-msg" id="delete-confirm-msg">선택한 항목을 삭제하시겠습니까?</div>
+    <div class="confirm-modal-actions">
+      <button class="btn-ghost" type="button" onclick="closeDeleteConfirm()">취소</button>
+      <button class="btn-delete" type="button" onclick="executeDelete()">삭제</button>
+    </div>
+  </div>
+</div>
 <div class="toast-copied" id="copy-toast">복사됐어요!</div>
 
 <script>
@@ -756,15 +771,22 @@ function deleteSelected() {
     alert('삭제할 항목을 선택해주세요.');
     return;
   }
-  if (confirm(`선택한 ${checked.length}건을 삭제하시겠습니까?`)) {
-    alert('삭제되었습니다.');
-  }
+  document.getElementById('delete-confirm-msg').textContent =
+    `선택한 ${checked.length}건을 삭제하시겠습니까?\n삭제 후에는 복구할 수 없습니다.`;
+  document.getElementById('delete-confirm-modal').classList.add('open');
+}
+function closeDeleteConfirm() {
+  document.getElementById('delete-confirm-modal').classList.remove('open');
+}
+function executeDelete() {
+  closeDeleteConfirm();
+  alert('삭제되었습니다.');
 }
 function updateSearchPlaceholder() {
   const type = document.getElementById('search-type')?.value;
   const input = document.getElementById('search-keyword');
   if (!input) return;
-  const placeholders = { title: '타이틀 검색', id: 'ID 검색', tab: '탭 항목 검색' };
+  const placeholders = { title: '타이틀 검색', label: '관리용 라벨 검색', id: 'ID 검색', tab: '탭 항목 검색' };
   input.placeholder = placeholders[type] || '검색어 입력';
 }
 function goEdit(contentId) {
@@ -779,7 +801,6 @@ function loadEditSample(contentId) {
   locState.e.categoryId = sample.categoryId;
   exposureState.e = JSON.parse(JSON.stringify(sample.exposure));
 
-  document.getElementById('e-list-id').textContent = getListNo(contentId);
   document.getElementById('e-section-label').value = sample.sectionLabel;
   document.getElementById('e-title').value = sample.title;
   document.getElementById('e-body').value = sample.body;
@@ -854,7 +875,7 @@ function updateToggleLabel(prefix) {
   if (!toggle || !label) return;
   label.textContent = toggle.checked ? '노출중 · 저장 즉시 노출됩니다' : '노출중지 · 저장 시 비노출 처리됩니다';
 }
-const CHAR_LIMITS = { title: 35, body: 150, highlight: 80 };
+const CHAR_LIMITS = { sectionLabel: 20, title: 35, body: 150, highlight: 80 };
 
 function updateFieldLimit(input, lenEl, countEl, warnEl, limit) {
   if (!input) return;
@@ -882,6 +903,13 @@ function chipFormFieldsHtml() {
   return `<div class="form-row" style="margin-bottom:10px"><label class="form-label" style="font-size:12px">타이틀 <span class="req">*</span></label><div><input type="text" class="form-control chip-title" maxlength="${CHAR_LIMITS.title}" placeholder="예) 인원 변경이 가능한가요?" /><div class="char-count chip-title-count"><span class="chip-title-len">0</span>/${CHAR_LIMITS.title}자</div><div class="char-warn chip-title-warn">최대 ${CHAR_LIMITS.title}자까지 입력할 수 있습니다.</div></div></div><div class="form-row" style="margin-bottom:10px"><label class="form-label" style="font-size:12px">본문 <span class="req">*</span><span class="form-label-sub">**텍스트** 강조</span></label><div><textarea class="form-textarea chip-body" maxlength="${CHAR_LIMITS.body}" placeholder="예) 예약 후 **마이페이지**에서 인원 변경이 가능합니다." style="min-height:56px"></textarea><div class="char-count chip-body-count"><span class="chip-body-len">0</span>/${CHAR_LIMITS.body}자</div><div class="char-warn chip-body-warn">최대 ${CHAR_LIMITS.body}자까지 입력할 수 있습니다.</div></div></div><div class="form-row" style="margin-bottom:0"><label class="form-label" style="font-size:12px">하이라이트</label><div><textarea class="form-textarea chip-highlight" maxlength="${CHAR_LIMITS.highlight}" placeholder="주의사항이나 강조 문구를 입력하세요." style="min-height:56px"></textarea><div class="char-count chip-highlight-count"><span class="chip-highlight-len">0</span>/${CHAR_LIMITS.highlight}자</div><div class="char-warn chip-highlight-warn">최대 ${CHAR_LIMITS.highlight}자까지 입력할 수 있습니다.</div></div></div>`;
 }
 function updateContentLimits(prefix) {
+  updateFieldLimit(
+    document.getElementById(prefix + '-section-label'),
+    document.getElementById(prefix + '-section-label-len'),
+    document.getElementById(prefix + '-section-label-count'),
+    document.getElementById(prefix + '-section-label-warn'),
+    CHAR_LIMITS.sectionLabel
+  );
   updateFieldLimit(
     document.getElementById(prefix + '-title'),
     document.getElementById(prefix + '-title-len'),
@@ -1022,14 +1050,16 @@ const STAGE_OPTIONS = [
   { id: 'package-reservation', label: '패키지_예약하기' },
   { id: 'package-payment', label: '패키지_결제하기' },
 ];
-const TAB_ITEM_PRESETS = [
-  { id: 'traveler-ko-name', label: '성인1 이름', itemLabel: '성인1 이름' },
-  { id: 'traveler-en-name', label: '성인1 영문이름', itemLabel: '성인1 영문이름' },
-  { id: 'samsung-card', label: '하나투어 삼성카드', itemLabel: '하나투어 삼성카드' },
-  { id: 'pay-total', label: '최종 결제금액', itemLabel: '최종 결제금액' },
-  { id: 'traveler-info', label: '여행자 정보 섹션', itemLabel: '여행자 정보 섹션' },
-  { id: 'card-payment', label: '카드 결제 섹션', itemLabel: '카드 결제 섹션' },
-];
+const STAGE_TAB_ITEMS = {
+  'package-reservation': [
+    { id: 'traveler-ko-name', label: '성인1 한글명 입력' },
+    { id: 'pay-total', label: '최종 결제금액' },
+  ],
+  'package-payment': [
+    { id: 'samsung-card-click', label: '하나투어 삼성카드 클릭' },
+    { id: 'hana-card-click', label: '하나카드 클릭' },
+  ],
+};
 const LIST_DISPLAY_ORDER = ['TOAST_001', 'TOAST_003'];
 
 function getListNo(contentId) {
@@ -1044,8 +1074,8 @@ const SAMPLE_CONTENTS = {
     title: '날짜와 인원을 미리 채워뒀어요.',
     body: '**숙박자 정보**만 입력하시면 바로 예약 가능해요.',
     highlight: '',
-    dateStart: '2026-06-01',
-    dateEnd: '2026-08-31',
+    dateStart: '2026-06-01T00:00',
+    dateEnd: '2026-08-31T23:59',
     always: false,
     exposureEnabled: true,
     status: '노출중',
@@ -1054,7 +1084,7 @@ const SAMPLE_CONTENTS = {
     modifiedBy: 'HG123',
     modifiedAt: '2026.05.20 10:06:42',
     chips: [{ title: '인원 변경이 가능한가요?', body: '예약 후 **마이페이지**에서 인원 변경이 가능합니다.', highlight: '' }],
-    exposure: { stageId: 'package-reservation', tapItemId: 'traveler-ko-name', itemLabel: '성인1 이름' },
+    exposure: { stageId: 'package-reservation', tapItemId: 'traveler-ko-name', itemLabel: '성인1 한글명 입력' },
   },
   TOAST_003: {
     categoryId: 'package',
@@ -1062,8 +1092,8 @@ const SAMPLE_CONTENTS = {
     title: '하나투어 삼성카드, 혜택만 정리했어요',
     body: '**하나투어 삼성카드**로 결제하면 할부 혜택과 마일리지 적립을 받을 수 있어요.',
     highlight: '',
-    dateStart: '2026-01-01',
-    dateEnd: '2026-04-30',
+    dateStart: '2026-01-01T00:00',
+    dateEnd: '2026-04-30T23:59',
     always: false,
     exposureEnabled: true,
     status: '기간만료',
@@ -1072,14 +1102,14 @@ const SAMPLE_CONTENTS = {
     modifiedBy: 'HG456',
     modifiedAt: '2026.05.15 13:58:34',
     chips: [],
-    exposure: { stageId: 'package-payment', tapItemId: 'samsung-card', itemLabel: '하나투어 삼성카드' },
+    exposure: { stageId: 'package-payment', tapItemId: 'samsung-card-click', itemLabel: '하나투어 삼성카드 클릭' },
   },
 };
 let currentEditId = 'TOAST_001';
 const DEFAULT_EXPOSURE = {
   stageId: 'package-reservation',
   tapItemId: 'traveler-ko-name',
-  itemLabel: '성인1 이름',
+  itemLabel: '성인1 한글명 입력',
 };
 const locState = {
   r: { categoryId: 'package' },
@@ -1100,29 +1130,38 @@ function populateLocCategorySelect(prefix) {
 function onLocCategoryChange(prefix) {
   locState[prefix].categoryId = document.getElementById(prefix + '-loc-category').value;
 }
+function getTapItemsForStage(stageId) {
+  return STAGE_TAB_ITEMS[stageId] || STAGE_TAB_ITEMS[STAGE_OPTIONS[0].id] || [];
+}
 function stageSelectHtml() {
   return STAGE_OPTIONS.map(s =>
     `<option value="${s.id}">${s.label}</option>`
   ).join('');
 }
-function tapItemSelectHtml() {
-  return TAB_ITEM_PRESETS.map(p =>
+function tapItemSelectHtml(stageId) {
+  return getTapItemsForStage(stageId).map(p =>
     `<option value="${p.id}">${p.label}</option>`
   ).join('');
 }
+function populateTapItemSelect(prefix, stageId, selectedId) {
+  const sel = document.getElementById(`${prefix}-exposure-tap-item`);
+  if (!sel) return;
+  const items = getTapItemsForStage(stageId);
+  sel.innerHTML = items.map(p => `<option value="${p.id}">${p.label}</option>`).join('');
+  const validId = items.find(p => p.id === selectedId)?.id || items[0]?.id || '';
+  sel.value = validId;
+}
 function exposureFieldsHtml(prefix) {
+  const defaultStageId = STAGE_OPTIONS[0].id;
   return `
-    <div class="form-row">
-      <label class="form-label">노출 단계 <span class="req">*</span></label>
-      <select class="form-control" id="${prefix}-exposure-stage" onchange="onExposureFieldChange('${prefix}')" style="max-width:280px">${stageSelectHtml()}</select>
+    <div class="form-field">
+      <label class="form-field-label">노출 화면 <span class="req">*</span></label>
+      <select class="form-control loc-select" id="${prefix}-exposure-stage" onchange="onExposureStageChange('${prefix}')">${stageSelectHtml()}</select>
     </div>
-    <div class="form-row">
-      <label class="form-label">탭 항목 <span class="req">*</span></label>
-      <select class="form-control" id="${prefix}-exposure-tap-item" onchange="onTapItemChange('${prefix}')" style="max-width:280px">${tapItemSelectHtml()}</select>
-    </div>
-    <div class="form-row" style="margin-bottom:0">
-      <label class="form-label">관리용 라벨</label>
-      <input type="text" class="form-control" id="${prefix}-exposure-label" placeholder="목록·관리 화면에 표시되는 이름" style="max-width:320px" oninput="onExposureFieldChange('${prefix}')" />
+    <div class="form-field">
+      <label class="form-field-label">탭 항목 <span class="req">*</span></label>
+      <select class="form-control loc-select" id="${prefix}-exposure-tap-item" onchange="onTapItemChange('${prefix}')">${tapItemSelectHtml(defaultStageId)}</select>
+      <div class="form-hint">사용자가 탭 항목을 클릭 혹은 터치 시 도움말이 활성화 됩니다.</div>
     </div>`;
 }
 function initExposurePanels() {
@@ -1135,18 +1174,22 @@ function initExposurePanels() {
 }
 function applyExposureState(prefix) {
   const s = exposureState[prefix];
-  setValue(`${prefix}-exposure-stage`, s.stageId || STAGE_OPTIONS[0].id);
-  setValue(`${prefix}-exposure-tap-item`, s.tapItemId || TAB_ITEM_PRESETS[0].id);
-  setValue(`${prefix}-exposure-label`, s.itemLabel);
+  const stageId = s.stageId || STAGE_OPTIONS[0].id;
+  setValue(`${prefix}-exposure-stage`, stageId);
+  populateTapItemSelect(prefix, stageId, s.tapItemId);
+  syncExposureStateFromForm(prefix);
 }
 function setValue(id, val) {
   const el = document.getElementById(id);
   if (el != null && val != null) el.value = val;
 }
+function onExposureStageChange(prefix) {
+  const stageId = document.getElementById(`${prefix}-exposure-stage`)?.value || STAGE_OPTIONS[0].id;
+  const currentTapId = document.getElementById(`${prefix}-exposure-tap-item`)?.value || '';
+  populateTapItemSelect(prefix, stageId, currentTapId);
+  onExposureFieldChange(prefix);
+}
 function onTapItemChange(prefix) {
-  const id = document.getElementById(`${prefix}-exposure-tap-item`)?.value;
-  const preset = TAB_ITEM_PRESETS.find(p => p.id === id);
-  if (preset) setValue(`${prefix}-exposure-label`, preset.itemLabel);
   onExposureFieldChange(prefix);
 }
 function onExposureFieldChange(prefix) {
@@ -1156,7 +1199,8 @@ function syncExposureStateFromForm(prefix) {
   const s = exposureState[prefix];
   s.stageId = document.getElementById(`${prefix}-exposure-stage`)?.value || '';
   s.tapItemId = document.getElementById(`${prefix}-exposure-tap-item`)?.value || '';
-  s.itemLabel = document.getElementById(`${prefix}-exposure-label`)?.value || '';
+  const preset = getTapItemsForStage(s.stageId).find(p => p.id === s.tapItemId);
+  s.itemLabel = preset ? preset.label : '';
 }
 function initLocPickers() {
   ['r', 'e'].forEach(prefix => populateLocCategorySelect(prefix));

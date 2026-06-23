@@ -108,7 +108,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 .toggle-slider:before { content: ''; position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #fff; top: 3px; left: 3px; transition: 0.2s; }
 .toggle input:checked + .toggle-slider:before { transform: translateX(16px); }
 
-.pager { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-top: 1px solid var(--ht-gray-border); font-size: 13px; color: var(--ht-text-secondary); flex-wrap: nowrap; white-space: nowrap; overflow: hidden; }
+.pager { display: flex; align-items: center; justify-content: center; padding: 12px 16px; border-top: 1px solid var(--ht-gray-border); font-size: 13px; color: var(--ht-text-secondary); flex-wrap: nowrap; white-space: nowrap; overflow: hidden; }
 .pager-btns { display: flex; gap: 3px; align-items: center; }
 .pager-btn { border: 1px solid var(--ht-gray-border); border-radius: 6px; padding: 5px 9px; font-size: 12px; cursor: pointer; background: #fff; color: var(--ht-text-secondary); min-width: 30px; text-align: center; line-height: 1.4; }
 .pager-btn:hover { background: var(--ht-gray-bg); }
@@ -123,7 +123,9 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 
 .form-row { display: grid; grid-template-columns: 140px 1fr; gap: 0; align-items: start; margin-bottom: 18px; }
 .form-row:last-child { margin-bottom: 0; }
-.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 32px; }
+.form-grid-2 { display: grid; grid-template-columns: 300px 300px; gap: 16px 24px; justify-content: start; }
+.form-grid-2 .form-control,
+.form-grid-2 .loc-select { width: 100%; max-width: 100%; }
 .form-field { display: flex; flex-direction: column; gap: 6px; }
 .form-field-label { font-size: 13px; font-weight: 500; color: var(--ht-text-primary); }
 .form-field-label .req { color: #D94040; }
@@ -153,6 +155,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 .date-range-wrap .form-control { max-width: 210px; }
 .date-range-wrap input[type=datetime-local] { min-width: 190px; }
 .list-period { font-size: 12px; color: var(--ht-text-secondary); line-height: 1.45; white-space: nowrap; padding-top: 10px; padding-bottom: 10px; }
+.list-status { font-size: 12px; color: var(--ht-text-secondary); white-space: nowrap; }
 .date-sep { font-size: 13px; color: var(--ht-text-muted); flex-shrink: 0; }
 .date-checkbox-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
 .date-checkbox-row input[type=checkbox] { accent-color: var(--ht-purple); width: 14px; height: 14px; }
@@ -304,11 +307,19 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
         </div>
 
         <div class="filter-bar">
+          <span class="filter-label">속성 구분</span>
+          <select class="filter-select" id="filter-category" onchange="onFilterCategoryChange()">
+            <option value="">전체</option>
+            <option value="package">패키지</option>
+            <option value="flight">항공</option>
+            <option value="hotel">숙박</option>
+            <option value="ticket">입장권</option>
+          </select>
           <span class="filter-label">노출 화면</span>
-          <select class="filter-select">
-            <option>전체</option>
-            <option>패키지_예약하기</option>
-            <option>패키지_결제하기</option>
+          <select class="filter-select" id="filter-stage">
+            <option value="">전체</option>
+            <option value="package-reservation">패키지_예약하기</option>
+            <option value="package-payment">패키지_결제하기</option>
           </select>
           <span class="filter-label">노출 상태</span>
           <select class="filter-select">
@@ -341,12 +352,13 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
                 <th style="width:28px"><input type="checkbox" /></th>
                 <th style="width:48px">ID</th>
                 <th style="width:22%; min-width:180px">타이틀</th>
-                <th style="width:120px">노출 화면</th>
+                <th style="width:72px">속성 구분</th>
+                <th style="width:88px">노출 화면</th>
                 <th style="width:110px">관리용 라벨</th>
                 <th style="width:110px">탭 항목</th>
                 <th style="width:118px">노출 기간</th>
-                <th style="width:64px">상태</th>
-                <th style="width:128px">최종수정일시</th>
+                <th style="width:80px">상태</th>
+                <th style="width:100px">최종수정일시</th>
                 <th style="width:72px">최종수정자</th>
               </tr>
             </thead>
@@ -357,12 +369,13 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
                 <td class="list-title-cell">
                   <button type="button" class="list-title-link" onclick="goEdit('TOAST_001')">날짜와 인원을 미리 채워뒀어요.</button>
                 </td>
+                <td style="font-size:12px;color:var(--ht-text-secondary)">패키지</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">패키지_예약하기</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">여행자 정보 입력</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">성인1 한글명 입력</td>
                 <td class="list-period">2026.06.01 00:00 ~<br>2026.08.31 23:59</td>
-                <td style="font-size:12px;color:var(--ht-text-secondary)">노출중</td>
-                <td style="font-size:12px;color:var(--ht-text-secondary)">2026.05.20 10:06:42</td>
+                <td class="list-status">노출중</td>
+                <td class="list-period">2026.05.20<br>10:06:42</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">HG123</td>
               </tr>
               <tr>
@@ -371,18 +384,18 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
                 <td class="list-title-cell">
                   <button type="button" class="list-title-link" onclick="goEdit('TOAST_003')">하나투어 삼성카드, 혜택만 정리했어요</button>
                 </td>
+                <td style="font-size:12px;color:var(--ht-text-secondary)">패키지</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">패키지_결제하기</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">카드 결제 섹션</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">하나투어 삼성카드 클릭</td>
                 <td class="list-period">2026.01.01 00:00 ~<br>2026.04.30 23:59</td>
-                <td style="font-size:12px;color:var(--ht-text-secondary)">기간만료</td>
-                <td style="font-size:12px;color:var(--ht-text-secondary)">2026.05.15 13:58:34</td>
+                <td class="list-status">기간만료</td>
+                <td class="list-period">2026.05.15<br>13:58:34</td>
                 <td style="font-size:12px;color:var(--ht-text-secondary)">HG456</td>
               </tr>
             </tbody>
           </table>
           <div class="pager">
-            <span>총 2건</span>
             <div class="pager-btns">
               <button class="pager-btn" title="처음">&lt;&lt;</button>
               <button class="pager-btn" title="이전">&lt;</button>
@@ -410,7 +423,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
           <span>신규등록</span>
         </div>
         <div class="page-header row">
-          <div class="page-title">신규등록</div>
+          <div class="page-title">H-AI 도움말 관리</div>
           <button class="btn-ghost" onclick="go('list')"><i class="ti ti-arrow-left" aria-hidden="true"></i> 목록으로</button>
         </div>
 
@@ -418,16 +431,16 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
           <div class="form-section-title">기본 정보</div>
           <div class="form-grid-2">
             <div class="form-field">
+              <label class="form-field-label">관리용 라벨 <span class="req">*</span></label>
+              <input type="text" class="form-control" id="r-section-label" maxlength="20" placeholder="예) 여행자 정보 입력, 카드 결제 섹션" oninput="updateContentLimits('r')" />
+              <div class="form-hint">목록·관리 화면에 표시되는 이름입니다.</div>
+              <div class="char-count" id="r-section-label-count"><span id="r-section-label-len">0</span>/20자</div>
+              <div class="char-warn" id="r-section-label-warn">최대 20자까지 입력할 수 있습니다.</div>
+            </div>
+            <div class="form-field">
               <label class="form-field-label">속성 구분 <span class="req">*</span></label>
               <select class="form-control loc-select" id="r-loc-category" onchange="onLocCategoryChange('r')"></select>
               <div class="form-hint">패키지·항공 등 속성별로 콘텐츠를 구분합니다.</div>
-            </div>
-            <div class="form-field">
-              <label class="form-field-label">관리용 라벨 <span class="req">*</span></label>
-              <input type="text" class="form-control" id="r-section-label" maxlength="20" placeholder="예) 여행자 정보 입력, 카드 결제 섹션" oninput="updateContentLimits('r')" />
-              <div class="char-count" id="r-section-label-count"><span id="r-section-label-len">0</span>/20자</div>
-              <div class="char-warn" id="r-section-label-warn">최대 20자까지 입력할 수 있습니다.</div>
-              <div class="form-hint">목록·관리 화면에 표시되는 이름입니다.</div>
             </div>
             <div class="exposure-fields" id="r-exposure-fields"></div>
             <div class="form-field">
@@ -440,39 +453,15 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
             <div class="form-field">
               <label class="form-field-label">노출 기간 <span class="req">*</span></label>
               <div class="date-range-wrap">
-                <input type="datetime-local" class="form-control" id="reg-date-start" value="2026-06-01T00:00" />
+                <input type="datetime-local" class="form-control" id="reg-date-start" />
                 <span class="date-sep">~</span>
-                <input type="datetime-local" class="form-control" id="reg-date-end" value="2026-08-31T23:59" />
+                <input type="datetime-local" class="form-control" id="reg-date-end" />
               </div>
               <div class="date-checkbox-row">
                 <input type="checkbox" id="reg-always" onchange="toggleAlways('reg')" />
                 <label for="reg-always">종료일 없음 (상시 노출)</label>
               </div>
               <div class="form-hint">기간이 종료되면 자동으로 비노출 처리됩니다.</div>
-            </div>
-          </div>
-          <div class="form-info-panel">
-            <div class="form-info-grid">
-              <div class="form-info-item form-info-item-full">
-                <span class="form-info-label">ID</span>
-                <span class="form-info-value">-</span>
-              </div>
-              <div class="form-info-item">
-                <span class="form-info-label">최초 등록자</span>
-                <span class="form-info-value">-</span>
-              </div>
-              <div class="form-info-item">
-                <span class="form-info-label">최초 등록일시</span>
-                <span class="form-info-value">-</span>
-              </div>
-              <div class="form-info-item">
-                <span class="form-info-label">최종 수정자</span>
-                <span class="form-info-value">-</span>
-              </div>
-              <div class="form-info-item">
-                <span class="form-info-label">최종 수정일시</span>
-                <span class="form-info-value">-</span>
-              </div>
             </div>
           </div>
         </div>
@@ -501,7 +490,6 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
               <textarea class="form-textarea" id="r-highlight" maxlength="80" placeholder="주의사항이나 강조 문구를 입력하세요." style="min-height:56px" oninput="updatePreview('r')"></textarea>
               <div class="char-count" id="r-highlight-count"><span id="r-highlight-len">0</span>/80자</div>
               <div class="char-warn" id="r-highlight-warn">최대 80자까지 입력할 수 있습니다.</div>
-              <div class="form-hint">※ 로 시작하는 보조 안내 문구 (선택)</div>
             </div>
           </div>
         </div>
@@ -592,14 +580,14 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
           <div class="form-section-title">기본 정보</div>
           <div class="form-grid-2">
             <div class="form-field">
-              <label class="form-field-label">속성 구분 <span class="req">*</span></label>
-              <select class="form-control loc-select" id="e-loc-category" onchange="onLocCategoryChange('e')"></select>
-            </div>
-            <div class="form-field">
               <label class="form-field-label">관리용 라벨 <span class="req">*</span></label>
               <input type="text" class="form-control" id="e-section-label" maxlength="20" value="여행자 정보 입력" oninput="updateContentLimits('e')" />
               <div class="char-count" id="e-section-label-count"><span id="e-section-label-len">0</span>/20자</div>
               <div class="char-warn" id="e-section-label-warn">최대 20자까지 입력할 수 있습니다.</div>
+            </div>
+            <div class="form-field">
+              <label class="form-field-label">속성 구분 <span class="req">*</span></label>
+              <select class="form-control loc-select" id="e-loc-category" onchange="onLocCategoryChange('e')"></select>
             </div>
             <div class="exposure-fields" id="e-exposure-fields"></div>
             <div class="form-field">
@@ -761,6 +749,34 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 function go(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + name).classList.add('active');
+  if (name === 'register') resetRegisterBasicInfo();
+}
+function resetRegisterBasicInfo() {
+  locState.r.categoryId = '';
+  exposureState.r = { stageId: '', tapItemId: '', itemLabel: '' };
+
+  const sectionLabel = document.getElementById('r-section-label');
+  if (sectionLabel) sectionLabel.value = '';
+  updateContentLimits('r');
+
+  populateLocCategorySelect('r');
+  applyExposureState('r');
+
+  const toggle = document.getElementById('reg-toggle');
+  if (toggle) {
+    toggle.checked = true;
+    updateToggleLabel('reg');
+  }
+
+  const dateStart = document.getElementById('reg-date-start');
+  const dateEnd = document.getElementById('reg-date-end');
+  const alwaysCb = document.getElementById('reg-always');
+  if (dateStart) dateStart.value = '';
+  if (dateEnd) {
+    dateEnd.value = '';
+    dateEnd.disabled = false;
+  }
+  if (alwaysCb) alwaysCb.checked = false;
 }
 function toggleSideGroup(headerEl) {
   headerEl.closest('.sidebar-group').classList.toggle('open');
@@ -1042,14 +1058,33 @@ function bindChipInputs() {
 }
 const EXPOSURE_LOCATIONS = [
   { id: 'package', label: '패키지', active: true },
-  { id: 'flight', label: '항공', active: false },
-  { id: 'hotel', label: '숙박', active: false },
-  { id: 'ticket', label: '입장권', active: false },
 ];
 const STAGE_OPTIONS = [
-  { id: 'package-reservation', label: '패키지_예약하기' },
-  { id: 'package-payment', label: '패키지_결제하기' },
+  { id: 'package-reservation', label: '패키지_예약하기', categoryId: 'package' },
+  { id: 'package-payment', label: '패키지_결제하기', categoryId: 'package' },
 ];
+function getStagesForCategory(categoryId) {
+  if (!categoryId) return STAGE_OPTIONS;
+  return STAGE_OPTIONS.filter(s => s.categoryId === categoryId);
+}
+function getDefaultStageForCategory(categoryId) {
+  return getStagesForCategory(categoryId)[0]?.id || '';
+}
+function populateFilterStageSelect(categoryId, selectedStageId) {
+  const sel = document.getElementById('filter-stage');
+  if (!sel) return;
+  const stages = getStagesForCategory(categoryId);
+  let html = '<option value="">전체</option>';
+  stages.forEach(s => { html += `<option value="${s.id}">${s.label}</option>`; });
+  sel.innerHTML = html;
+  const validId = stages.some(s => s.id === selectedStageId) ? selectedStageId : '';
+  sel.value = validId;
+  sel.disabled = !!categoryId && stages.length === 0;
+}
+function onFilterCategoryChange() {
+  const categoryId = document.getElementById('filter-category')?.value || '';
+  populateFilterStageSelect(categoryId, '');
+}
 const STAGE_TAB_ITEMS = {
   'package-reservation': [
     { id: 'traveler-ko-name', label: '성인1 한글명 입력' },
@@ -1112,55 +1147,74 @@ const DEFAULT_EXPOSURE = {
   itemLabel: '성인1 한글명 입력',
 };
 const locState = {
-  r: { categoryId: 'package' },
+  r: { categoryId: '' },
   e: { categoryId: 'package' },
 };
 const exposureState = {
-  r: { stageId: 'package-reservation', tapItemId: '', itemLabel: '' },
+  r: { stageId: '', tapItemId: '', itemLabel: '' },
   e: JSON.parse(JSON.stringify(DEFAULT_EXPOSURE)),
 };
+const SELECT_OPTION_HTML = '<option value="">선택</option>';
 function populateLocCategorySelect(prefix) {
   const sel = document.getElementById(prefix + '-loc-category');
   if (!sel) return;
-  sel.innerHTML = EXPOSURE_LOCATIONS.map(cat =>
+  sel.innerHTML = SELECT_OPTION_HTML + EXPOSURE_LOCATIONS.map(cat =>
     `<option value="${cat.id}">${cat.label}${cat.active ? '' : ' (미운영)'}</option>`
   ).join('');
-  sel.value = locState[prefix].categoryId;
+  sel.value = locState[prefix].categoryId || '';
 }
 function onLocCategoryChange(prefix) {
-  locState[prefix].categoryId = document.getElementById(prefix + '-loc-category').value;
+  const categoryId = document.getElementById(prefix + '-loc-category').value;
+  locState[prefix].categoryId = categoryId;
+  const stageId = populateStageSelect(prefix, categoryId, '');
+  exposureState[prefix].stageId = stageId;
+  populateTapItemSelect(prefix, stageId, '');
+  syncExposureStateFromForm(prefix);
 }
 function getTapItemsForStage(stageId) {
-  return STAGE_TAB_ITEMS[stageId] || STAGE_TAB_ITEMS[STAGE_OPTIONS[0].id] || [];
+  if (!stageId) return [];
+  return STAGE_TAB_ITEMS[stageId] || [];
 }
-function stageSelectHtml() {
-  return STAGE_OPTIONS.map(s =>
-    `<option value="${s.id}">${s.label}</option>`
-  ).join('');
+function stageSelectHtml(categoryId) {
+  const stages = categoryId ? getStagesForCategory(categoryId) : [];
+  let html = SELECT_OPTION_HTML;
+  stages.forEach(s => { html += `<option value="${s.id}">${s.label}</option>`; });
+  return html;
+}
+function populateStageSelect(prefix, categoryId, selectedStageId) {
+  const sel = document.getElementById(`${prefix}-exposure-stage`);
+  if (!sel) return selectedStageId || '';
+  const stages = categoryId ? getStagesForCategory(categoryId) : [];
+  sel.innerHTML = stageSelectHtml(categoryId);
+  const validId = selectedStageId && stages.some(s => s.id === selectedStageId) ? selectedStageId : '';
+  sel.value = validId;
+  return validId;
 }
 function tapItemSelectHtml(stageId) {
-  return getTapItemsForStage(stageId).map(p =>
-    `<option value="${p.id}">${p.label}</option>`
-  ).join('');
+  const items = getTapItemsForStage(stageId);
+  let html = SELECT_OPTION_HTML;
+  items.forEach(p => { html += `<option value="${p.id}">${p.label}</option>`; });
+  return html;
 }
 function populateTapItemSelect(prefix, stageId, selectedId) {
   const sel = document.getElementById(`${prefix}-exposure-tap-item`);
   if (!sel) return;
   const items = getTapItemsForStage(stageId);
-  sel.innerHTML = items.map(p => `<option value="${p.id}">${p.label}</option>`).join('');
-  const validId = items.find(p => p.id === selectedId)?.id || items[0]?.id || '';
+  sel.innerHTML = tapItemSelectHtml(stageId);
+  const validId = selectedId && items.some(p => p.id === selectedId) ? selectedId : '';
   sel.value = validId;
 }
 function exposureFieldsHtml(prefix) {
-  const defaultStageId = STAGE_OPTIONS[0].id;
+  const categoryId = locState[prefix]?.categoryId || '';
+  const stageId = exposureState[prefix]?.stageId || '';
   return `
     <div class="form-field">
       <label class="form-field-label">노출 화면 <span class="req">*</span></label>
-      <select class="form-control loc-select" id="${prefix}-exposure-stage" onchange="onExposureStageChange('${prefix}')">${stageSelectHtml()}</select>
+      <select class="form-control loc-select" id="${prefix}-exposure-stage" onchange="onExposureStageChange('${prefix}')">${stageSelectHtml(categoryId)}</select>
     </div>
     <div class="form-field">
       <label class="form-field-label">탭 항목 <span class="req">*</span></label>
-      <select class="form-control loc-select" id="${prefix}-exposure-tap-item" onchange="onTapItemChange('${prefix}')">${tapItemSelectHtml(defaultStageId)}</select>
+      <select class="form-control loc-select" id="${prefix}-exposure-tap-item" onchange="onTapItemChange('${prefix}')">${tapItemSelectHtml(stageId)}</select>
       <div class="form-hint">사용자가 탭 항목을 클릭 혹은 터치 시 도움말이 활성화 됩니다.</div>
     </div>`;
 }
@@ -1174,9 +1228,9 @@ function initExposurePanels() {
 }
 function applyExposureState(prefix) {
   const s = exposureState[prefix];
-  const stageId = s.stageId || STAGE_OPTIONS[0].id;
-  setValue(`${prefix}-exposure-stage`, stageId);
-  populateTapItemSelect(prefix, stageId, s.tapItemId);
+  const categoryId = locState[prefix].categoryId || '';
+  const stageId = populateStageSelect(prefix, categoryId, s.stageId || '');
+  populateTapItemSelect(prefix, stageId, s.tapItemId || '');
   syncExposureStateFromForm(prefix);
 }
 function setValue(id, val) {
@@ -1184,9 +1238,8 @@ function setValue(id, val) {
   if (el != null && val != null) el.value = val;
 }
 function onExposureStageChange(prefix) {
-  const stageId = document.getElementById(`${prefix}-exposure-stage`)?.value || STAGE_OPTIONS[0].id;
-  const currentTapId = document.getElementById(`${prefix}-exposure-tap-item`)?.value || '';
-  populateTapItemSelect(prefix, stageId, currentTapId);
+  const stageId = document.getElementById(`${prefix}-exposure-stage`)?.value || '';
+  populateTapItemSelect(prefix, stageId, '');
   onExposureFieldChange(prefix);
 }
 function onTapItemChange(prefix) {
@@ -1233,6 +1286,7 @@ function addChip(p) {
 bindChipInputs();
 initLocPickers();
 initExposurePanels();
+populateFilterStageSelect('', '');
 loadEditSample('TOAST_001');
 updateAllChipLimits('r');
 updatePreview('r');

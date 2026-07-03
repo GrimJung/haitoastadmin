@@ -146,6 +146,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
 .char-count { font-size: 11px; color: var(--ht-text-muted); text-align: right; margin-top: 4px; }
 .char-count.over-limit { color: #D94040; }
 .char-count.over-limit span { font-weight: 600; }
+.char-count.at-limit { color: var(--ht-text-secondary); }
 .char-warn { font-size: 11px; color: #D94040; text-align: right; margin-top: 2px; display: none; }
 .form-control.over-limit, .form-textarea.over-limit { border-color: #D94040; }
 .form-control.over-limit:focus, .form-textarea.over-limit:focus { box-shadow: 0 0 0 3px #FFF0F0; }
@@ -473,25 +474,25 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
           <div class="form-row">
             <label class="form-label">타이틀 <span class="req">*</span></label>
             <div>
-              <input type="text" class="form-control" id="r-title" maxlength="35" placeholder="예) 날짜와 인원을 미리 채워뒀어요." oninput="updatePreview('r')" />
-              <div class="char-count" id="r-title-count"><span id="r-title-len">0</span>/35자</div>
-              <div class="char-warn" id="r-title-warn">최대 35자까지 입력할 수 있습니다.</div>
+              <input type="text" class="form-control" id="r-title" maxlength="18" placeholder="예) 날짜와 인원을 미리 채워뒀어요." oninput="updatePreview('r')" />
+              <div class="char-count" id="r-title-count"><span id="r-title-len">0</span>/18자</div>
+              <div class="char-warn" id="r-title-warn">최대 18자까지 입력할 수 있습니다.</div>
             </div>
           </div>
           <div class="form-row">
             <label class="form-label">본문 <span class="req">*</span><span class="form-label-sub">**텍스트**로 일부 강조</span></label>
             <div>
-              <textarea class="form-textarea" id="r-body" maxlength="150" placeholder="예) **숙박자 정보**만 입력하시면 바로 예약 가능해요." oninput="updatePreview('r')"></textarea>
-              <div class="char-count" id="r-body-count"><span id="r-body-len">0</span>/150자</div>
-              <div class="char-warn" id="r-body-warn">최대 150자까지 입력할 수 있습니다.</div>
+              <textarea class="form-textarea" id="r-body" maxlength="200" placeholder="예) **숙박자 정보**만 입력하시면 바로 예약 가능해요." oninput="updatePreview('r')"></textarea>
+              <div class="char-count" id="r-body-count"><span id="r-body-len">0</span>/200자</div>
+              <div class="char-warn" id="r-body-warn">최대 200자까지 입력할 수 있습니다.</div>
             </div>
           </div>
           <div class="form-row" style="margin-bottom:0">
             <label class="form-label">하이라이트</label>
             <div>
-              <textarea class="form-textarea" id="r-highlight" maxlength="80" placeholder="주의사항이나 강조 문구를 입력하세요." style="min-height:56px" oninput="updatePreview('r')"></textarea>
-              <div class="char-count" id="r-highlight-count"><span id="r-highlight-len">0</span>/80자</div>
-              <div class="char-warn" id="r-highlight-warn">최대 80자까지 입력할 수 있습니다.</div>
+              <textarea class="form-textarea" id="r-highlight" maxlength="60" placeholder="주의사항이나 강조 문구를 입력하세요." style="min-height:56px" oninput="updatePreview('r')"></textarea>
+              <div class="char-count" id="r-highlight-count"><span id="r-highlight-len">0</span>/60자</div>
+              <div class="char-warn" id="r-highlight-warn">최대 60자까지 입력할 수 있습니다.</div>
             </div>
           </div>
         </div>
@@ -501,9 +502,9 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
           <div id="r-chips">
             <div class="sub-card" id="r-chip-1">
               <div class="sub-card-header">추천 질문 1 <button class="btn-remove" onclick="rmChip('r',1)">✕ 삭제</button></div>
-              <div class="form-row" style="margin-bottom:10px"><label class="form-label" style="font-size:12px">타이틀 <span class="req">*</span></label><div><input type="text" class="form-control chip-title" maxlength="35" placeholder="예) 인원 변경이 가능한가요?" /><div class="char-count chip-title-count"><span class="chip-title-len">0</span>/35자</div><div class="char-warn chip-title-warn">최대 35자까지 입력할 수 있습니다.</div></div></div>
-              <div class="form-row" style="margin-bottom:10px"><label class="form-label" style="font-size:12px">본문 <span class="req">*</span><span class="form-label-sub">**텍스트** 강조</span></label><div><textarea class="form-textarea chip-body" maxlength="150" placeholder="예) 예약 후 **마이페이지**에서 인원 변경이 가능합니다." style="min-height:56px"></textarea><div class="char-count chip-body-count"><span class="chip-body-len">0</span>/150자</div><div class="char-warn chip-body-warn">최대 150자까지 입력할 수 있습니다.</div></div></div>
-              <div class="form-row" style="margin-bottom:0"><label class="form-label" style="font-size:12px">하이라이트</label><div><textarea class="form-textarea chip-highlight" maxlength="80" placeholder="주의사항이나 강조 문구를 입력하세요." style="min-height:56px"></textarea><div class="char-count chip-highlight-count"><span class="chip-highlight-len">0</span>/80자</div><div class="char-warn chip-highlight-warn">최대 80자까지 입력할 수 있습니다.</div></div></div>
+              <div class="form-row" style="margin-bottom:10px"><label class="form-label" style="font-size:12px">타이틀 <span class="req">*</span></label><div><input type="text" class="form-control chip-title" maxlength="20" placeholder="예) 인원 변경이 가능한가요?" /><div class="char-count chip-title-count"><span class="chip-title-len">0</span>/20자</div><div class="char-warn chip-title-warn">최대 20자까지 입력할 수 있습니다.</div></div></div>
+              <div class="form-row" style="margin-bottom:10px"><label class="form-label" style="font-size:12px">본문 <span class="req">*</span><span class="form-label-sub">**텍스트** 강조</span></label><div><textarea class="form-textarea chip-body" maxlength="200" placeholder="예) 예약 후 **마이페이지**에서 인원 변경이 가능합니다." style="min-height:56px"></textarea><div class="char-count chip-body-count"><span class="chip-body-len">0</span>/200자</div><div class="char-warn chip-body-warn">최대 200자까지 입력할 수 있습니다.</div></div></div>
+              <div class="form-row" style="margin-bottom:0"><label class="form-label" style="font-size:12px">하이라이트</label><div><textarea class="form-textarea chip-highlight" maxlength="60" placeholder="주의사항이나 강조 문구를 입력하세요." style="min-height:56px"></textarea><div class="char-count chip-highlight-count"><span class="chip-highlight-len">0</span>/60자</div><div class="char-warn chip-highlight-warn">최대 60자까지 입력할 수 있습니다.</div></div></div>
             </div>
           </div>
           <button class="btn-add-sub" id="r-add-chip" onclick="addChip('r')"><i class="ti ti-plus" aria-hidden="true"></i> 추천 질문 추가</button>
@@ -639,25 +640,25 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
           <div class="form-row">
             <label class="form-label">타이틀 <span class="req">*</span></label>
             <div>
-              <input type="text" class="form-control" id="e-title" maxlength="35" value="날짜와 인원을 미리 채워뒀어요." oninput="updatePreview('e')" />
-              <div class="char-count" id="e-title-count"><span id="e-title-len">0</span>/35자</div>
-              <div class="char-warn" id="e-title-warn">최대 35자까지 입력할 수 있습니다.</div>
+              <input type="text" class="form-control" id="e-title" maxlength="18" value="날짜와 인원을 미리 채워뒀어요." oninput="updatePreview('e')" />
+              <div class="char-count" id="e-title-count"><span id="e-title-len">0</span>/18자</div>
+              <div class="char-warn" id="e-title-warn">최대 18자까지 입력할 수 있습니다.</div>
             </div>
           </div>
           <div class="form-row">
             <label class="form-label">본문 <span class="req">*</span><span class="form-label-sub">**텍스트**로 일부 강조</span></label>
             <div>
-              <textarea class="form-textarea" id="e-body" maxlength="150" oninput="updatePreview('e')">**숙박자 정보**만 입력하시면 바로 예약 가능해요.</textarea>
-              <div class="char-count" id="e-body-count"><span id="e-body-len">0</span>/150자</div>
-              <div class="char-warn" id="e-body-warn">최대 150자까지 입력할 수 있습니다.</div>
+              <textarea class="form-textarea" id="e-body" maxlength="200" oninput="updatePreview('e')">**숙박자 정보**만 입력하시면 바로 예약 가능해요.</textarea>
+              <div class="char-count" id="e-body-count"><span id="e-body-len">0</span>/200자</div>
+              <div class="char-warn" id="e-body-warn">최대 200자까지 입력할 수 있습니다.</div>
             </div>
           </div>
           <div class="form-row" style="margin-bottom:0">
             <label class="form-label">하이라이트</label>
             <div>
-              <textarea class="form-textarea" id="e-highlight" maxlength="80" placeholder="주의사항이나 강조 문구를 입력하세요." style="min-height:56px" oninput="updatePreview('e')"></textarea>
-              <div class="char-count" id="e-highlight-count"><span id="e-highlight-len">0</span>/80자</div>
-              <div class="char-warn" id="e-highlight-warn">최대 80자까지 입력할 수 있습니다.</div>
+              <textarea class="form-textarea" id="e-highlight" maxlength="60" placeholder="주의사항이나 강조 문구를 입력하세요." style="min-height:56px" oninput="updatePreview('e')"></textarea>
+              <div class="char-count" id="e-highlight-count"><span id="e-highlight-len">0</span>/60자</div>
+              <div class="char-warn" id="e-highlight-warn">최대 60자까지 입력할 수 있습니다.</div>
             </div>
           </div>
         </div>
@@ -667,9 +668,9 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-s
           <div id="e-chips">
           <div class="sub-card" id="e-chip-1">
             <div class="sub-card-header">추천 질문 1 <button class="btn-remove" onclick="rmChip('e',1)">✕ 삭제</button></div>
-            <div class="form-row" style="margin-bottom:10px"><label class="form-label" style="font-size:12px">타이틀 <span class="req">*</span></label><div><input type="text" class="form-control chip-title" maxlength="35" value="인원 변경이 가능한가요?" /><div class="char-count chip-title-count"><span class="chip-title-len">0</span>/35자</div><div class="char-warn chip-title-warn">최대 35자까지 입력할 수 있습니다.</div></div></div>
-            <div class="form-row" style="margin-bottom:10px"><label class="form-label" style="font-size:12px">본문 <span class="req">*</span><span class="form-label-sub">**텍스트** 강조</span></label><div><textarea class="form-textarea chip-body" maxlength="150" style="min-height:56px">예약 후 **마이페이지**에서 인원 변경이 가능합니다.</textarea><div class="char-count chip-body-count"><span class="chip-body-len">0</span>/150자</div><div class="char-warn chip-body-warn">최대 150자까지 입력할 수 있습니다.</div></div></div>
-            <div class="form-row" style="margin-bottom:0"><label class="form-label" style="font-size:12px">하이라이트</label><div><textarea class="form-textarea chip-highlight" maxlength="80" placeholder="주의사항이나 강조 문구를 입력하세요." style="min-height:56px"></textarea><div class="char-count chip-highlight-count"><span class="chip-highlight-len">0</span>/80자</div><div class="char-warn chip-highlight-warn">최대 80자까지 입력할 수 있습니다.</div></div></div>
+            <div class="form-row" style="margin-bottom:10px"><label class="form-label" style="font-size:12px">타이틀 <span class="req">*</span></label><div><input type="text" class="form-control chip-title" maxlength="20" value="인원 변경이 가능한가요?" /><div class="char-count chip-title-count"><span class="chip-title-len">0</span>/20자</div><div class="char-warn chip-title-warn">최대 20자까지 입력할 수 있습니다.</div></div></div>
+            <div class="form-row" style="margin-bottom:10px"><label class="form-label" style="font-size:12px">본문 <span class="req">*</span><span class="form-label-sub">**텍스트** 강조</span></label><div><textarea class="form-textarea chip-body" maxlength="200" style="min-height:56px">예약 후 **마이페이지**에서 인원 변경이 가능합니다.</textarea><div class="char-count chip-body-count"><span class="chip-body-len">0</span>/200자</div><div class="char-warn chip-body-warn">최대 200자까지 입력할 수 있습니다.</div></div></div>
+            <div class="form-row" style="margin-bottom:0"><label class="form-label" style="font-size:12px">하이라이트</label><div><textarea class="form-textarea chip-highlight" maxlength="60" placeholder="주의사항이나 강조 문구를 입력하세요." style="min-height:56px"></textarea><div class="char-count chip-highlight-count"><span class="chip-highlight-len">0</span>/60자</div><div class="char-warn chip-highlight-warn">최대 60자까지 입력할 수 있습니다.</div></div></div>
           </div>
           </div>
           <button class="btn-add-sub" id="e-add-chip" onclick="addChip('e')"><i class="ti ti-plus" aria-hidden="true"></i> 추천 질문 추가</button>
@@ -893,7 +894,11 @@ function updateToggleLabel(prefix) {
   if (!toggle || !label) return;
   label.textContent = toggle.checked ? '노출중 · 저장 즉시 노출됩니다' : '노출중지 · 저장 시 비노출 처리됩니다';
 }
-const CHAR_LIMITS = { sectionLabel: 20, title: 35, body: 150, highlight: 80 };
+const CHAR_LIMITS = {
+  sectionLabel: 20,
+  toast: { title: 18, body: 200, highlight: 60 },
+  chip: { title: 20, body: 200, highlight: 60 },
+};
 
 function updateFieldLimit(input, lenEl, countEl, warnEl, limit) {
   if (!input) return;
@@ -903,24 +908,31 @@ function updateFieldLimit(input, lenEl, countEl, warnEl, limit) {
     len = limit;
   }
   if (lenEl) lenEl.textContent = len;
-  const isOver = len >= limit;
-  if (countEl) countEl.classList.toggle('over-limit', isOver);
+  const isOver = len > limit;
+  const isAtLimit = len === limit;
+  if (countEl) {
+    countEl.classList.toggle('over-limit', isOver);
+    countEl.classList.toggle('at-limit', isAtLimit && !isOver);
+  }
   input.classList.toggle('over-limit', isOver);
   if (warnEl) warnEl.style.display = isOver ? 'block' : 'none';
 }
 function updateChipLimits(card) {
   if (!card) return;
-  updateFieldLimit(card.querySelector('.chip-title'), card.querySelector('.chip-title-len'), card.querySelector('.chip-title-count'), card.querySelector('.chip-title-warn'), CHAR_LIMITS.title);
-  updateFieldLimit(card.querySelector('.chip-body'), card.querySelector('.chip-body-len'), card.querySelector('.chip-body-count'), card.querySelector('.chip-body-warn'), CHAR_LIMITS.body);
-  updateFieldLimit(card.querySelector('.chip-highlight'), card.querySelector('.chip-highlight-len'), card.querySelector('.chip-highlight-count'), card.querySelector('.chip-highlight-warn'), CHAR_LIMITS.highlight);
+  const limits = CHAR_LIMITS.chip;
+  updateFieldLimit(card.querySelector('.chip-title'), card.querySelector('.chip-title-len'), card.querySelector('.chip-title-count'), card.querySelector('.chip-title-warn'), limits.title);
+  updateFieldLimit(card.querySelector('.chip-body'), card.querySelector('.chip-body-len'), card.querySelector('.chip-body-count'), card.querySelector('.chip-body-warn'), limits.body);
+  updateFieldLimit(card.querySelector('.chip-highlight'), card.querySelector('.chip-highlight-len'), card.querySelector('.chip-highlight-count'), card.querySelector('.chip-highlight-warn'), limits.highlight);
 }
 function updateAllChipLimits(prefix) {
   document.querySelectorAll('#' + prefix + '-chips .sub-card').forEach(updateChipLimits);
 }
 function chipFormFieldsHtml() {
-  return `<div class="form-row" style="margin-bottom:10px"><label class="form-label" style="font-size:12px">타이틀 <span class="req">*</span></label><div><input type="text" class="form-control chip-title" maxlength="${CHAR_LIMITS.title}" placeholder="예) 인원 변경이 가능한가요?" /><div class="char-count chip-title-count"><span class="chip-title-len">0</span>/${CHAR_LIMITS.title}자</div><div class="char-warn chip-title-warn">최대 ${CHAR_LIMITS.title}자까지 입력할 수 있습니다.</div></div></div><div class="form-row" style="margin-bottom:10px"><label class="form-label" style="font-size:12px">본문 <span class="req">*</span><span class="form-label-sub">**텍스트** 강조</span></label><div><textarea class="form-textarea chip-body" maxlength="${CHAR_LIMITS.body}" placeholder="예) 예약 후 **마이페이지**에서 인원 변경이 가능합니다." style="min-height:56px"></textarea><div class="char-count chip-body-count"><span class="chip-body-len">0</span>/${CHAR_LIMITS.body}자</div><div class="char-warn chip-body-warn">최대 ${CHAR_LIMITS.body}자까지 입력할 수 있습니다.</div></div></div><div class="form-row" style="margin-bottom:0"><label class="form-label" style="font-size:12px">하이라이트</label><div><textarea class="form-textarea chip-highlight" maxlength="${CHAR_LIMITS.highlight}" placeholder="주의사항이나 강조 문구를 입력하세요." style="min-height:56px"></textarea><div class="char-count chip-highlight-count"><span class="chip-highlight-len">0</span>/${CHAR_LIMITS.highlight}자</div><div class="char-warn chip-highlight-warn">최대 ${CHAR_LIMITS.highlight}자까지 입력할 수 있습니다.</div></div></div>`;
+  const limits = CHAR_LIMITS.chip;
+  return `<div class="form-row" style="margin-bottom:10px"><label class="form-label" style="font-size:12px">타이틀 <span class="req">*</span></label><div><input type="text" class="form-control chip-title" maxlength="${limits.title}" placeholder="예) 인원 변경이 가능한가요?" /><div class="char-count chip-title-count"><span class="chip-title-len">0</span>/${limits.title}자</div><div class="char-warn chip-title-warn">최대 ${limits.title}자까지 입력할 수 있습니다.</div></div></div><div class="form-row" style="margin-bottom:10px"><label class="form-label" style="font-size:12px">본문 <span class="req">*</span><span class="form-label-sub">**텍스트** 강조</span></label><div><textarea class="form-textarea chip-body" maxlength="${limits.body}" placeholder="예) 예약 후 **마이페이지**에서 인원 변경이 가능합니다." style="min-height:56px"></textarea><div class="char-count chip-body-count"><span class="chip-body-len">0</span>/${limits.body}자</div><div class="char-warn chip-body-warn">최대 ${limits.body}자까지 입력할 수 있습니다.</div></div></div><div class="form-row" style="margin-bottom:0"><label class="form-label" style="font-size:12px">하이라이트</label><div><textarea class="form-textarea chip-highlight" maxlength="${limits.highlight}" placeholder="주의사항이나 강조 문구를 입력하세요." style="min-height:56px"></textarea><div class="char-count chip-highlight-count"><span class="chip-highlight-len">0</span>/${limits.highlight}자</div><div class="char-warn chip-highlight-warn">최대 ${limits.highlight}자까지 입력할 수 있습니다.</div></div></div>`;
 }
 function updateContentLimits(prefix) {
+  const toastLimits = CHAR_LIMITS.toast;
   updateFieldLimit(
     document.getElementById(prefix + '-section-label'),
     document.getElementById(prefix + '-section-label-len'),
@@ -933,21 +945,21 @@ function updateContentLimits(prefix) {
     document.getElementById(prefix + '-title-len'),
     document.getElementById(prefix + '-title-count'),
     document.getElementById(prefix + '-title-warn'),
-    CHAR_LIMITS.title
+    toastLimits.title
   );
   updateFieldLimit(
     document.getElementById(prefix + '-body'),
     document.getElementById(prefix + '-body-len'),
     document.getElementById(prefix + '-body-count'),
     document.getElementById(prefix + '-body-warn'),
-    CHAR_LIMITS.body
+    toastLimits.body
   );
   updateFieldLimit(
     document.getElementById(prefix + '-highlight'),
     document.getElementById(prefix + '-highlight-len'),
     document.getElementById(prefix + '-highlight-count'),
     document.getElementById(prefix + '-highlight-warn'),
-    CHAR_LIMITS.highlight
+    toastLimits.highlight
   );
 }
 const previewState = { r: { activeChip: null }, e: { activeChip: null } };
